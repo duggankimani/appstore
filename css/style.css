@@ -1,0 +1,212 @@
+/* Custom Stylesheet */
+/**
+ * Use this file to override Materialize files so you can update
+ * the core Materialize files in the future
+ *
+ * Made By MaterializeCSS.com
+ */
+body {
+	background: #eeeeee;
+}
+
+.form-wrapper a {
+	width: 55%;
+}
+
+.deactivate {
+	opacity: 0.4;
+}
+
+.icon-block {
+	padding: 0 15px;
+}
+
+.icon-block .material-icons {
+	font-size: inherit;
+}
+
+.logo-container {
+	position: relative;
+}
+
+.brand-logo img {
+	margin-top: 3px;
+	width: 153px;
+}
+
+footer.page-footer {
+	background-color: #26a69a !important;
+	margin-top: 20px;
+	padding-top: 20px;
+}
+
+.section-headers {
+	height: 100px;
+}
+
+.section-headers-popular h5 {
+	font-size: 12px;
+}
+
+.section-headers-popular { /*border-bottom: 2px solid #788;*/
+	height: 89px;
+}
+
+.popularshading {
+	background: #dddddd none repeat scroll 0 0;
+	border-left: 1px solid #bbb;
+	padding: 8px;
+}
+
+.section-headers span {
+	background: #26a69a none repeat scroll 0 0;
+	color: #ffffff;
+	font-family: georgia;
+	font-size: 20px;
+	padding: 5px;
+	
+}
+
+.searchbar button{
+
+	background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+    border: medium none;
+    margin-left: -61px;	
+	
+}
+
+
+
+
+.dimensions{
+
+	height:200px;
+	
+}
+
+.light-grey {
+	background: #ccc none repeat scroll 0 0;
+}
+
+.icon-block p {
+	display: block;
+	border-top: 1px solid green;
+}
+
+.input-style {
+	color: #000 !important;
+	height: 30px !important;
+	padding: 5px !important;
+}
+
+.blinder {
+	background: #000 none repeat scroll 0 0;
+	border: 1px solid;
+	display: none;
+	height: 100%;
+	opacity: 0.29;
+	width: 100%;
+	z-index: 1000;
+}
+
+.form-wrapper i {
+	color: green !important;
+}
+
+.form-wrapper button {
+	border: medium none;
+	height: 36px !important;
+	left: 96%;
+	position: relative;
+	top: -74px;
+	background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+}
+
+
+/*cards*/
+
+.card h2 {
+	font-size: 19px !important;
+	margin: 0 !important;
+}
+
+.card .card-content {
+	border-radius: 0 0 2px 2px;
+	min-height: 58px;
+	padding: 4px;
+}
+
+.card .card-content h5 {
+	font-size: 12px !important;
+}
+
+.cards_listing i {
+	font-size: 100px !important;
+	margin: 0 !important;
+}
+
+.cards_details {
+	/*height: 500px!important;*/
+}
+
+.card .card-action {
+	padding: 5px !important;
+}
+
+.card .card-action a {
+	font-size: 11px;
+}
+
+.card-action .free {
+	background: #ffab40 none repeat scroll 0 0;
+	color: #fff !important;
+	float: right;
+	font-size: 10px;
+	margin-right: 0 !important;
+	margin-top: 3px;
+	padding: 0 4px !important;
+}
+
+.card-action a {
+	padding: 5px !important;
+}
+
+
+
+/*sidebar*/
+
+.sidebar {
+	border-right: 2px solid #2bbbad;
+	margin-left: 0 !important;
+	margin-top: 72px;
+	padding-left: 0;
+	padding-right: 0;
+	position: fixed;
+	width: 14%;
+}
+
+.sidebar ul {
+	width: 100%;
+}
+
+.sidebar .btn{
+
+	color: #fff !important;
+    font-size: 12px;
+    margin-left: 68px;
+	
+}
+
+.sidebar li {
+	color: #bbb !important;
+	padding: 2px 27px 2px 18px;
+	text-align: right;
+}
+
+.sidebar li:hover {
+	background: #cecece !important;
+}
+
+.sidebar a {
+	color: #555 !important;
+}
