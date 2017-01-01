@@ -13,6 +13,19 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>Jersey Web Application</servlet-name>
-        <url-pattern>/webapi/*</url-pattern>
+        <url-pattern>/api/*</url-pattern>
     </servlet-mapping>
+    
+    <listener>
+        <listener-class>co.ke.workpoint.store.util.BootHandler</listener-class>
+    </listener>
+    
+    <!-- filter>
+        <filter-name>TransactionFilter</filter-name>
+        <filter-class>co.ke.workpoint.store.transaction.TransactionFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>TransactionFilter</filter-name>
+        <url-pattern>/api/*</url-pattern>
+    </filter-mapping -->
 </web-app>
