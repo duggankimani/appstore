@@ -23,8 +23,8 @@ public class UploadResource {
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces(MediaType.APPLICATION_JSON)
 	public ProcessDef uploadFile(
-			@FormDataParam("file") InputStream uploadedInputStream,
-			@FormDataParam("file") FormDataContentDisposition fileDetail) throws IOException {
+			@FormDataParam("process_zip") InputStream uploadedInputStream,
+			@FormDataParam("process_zip") FormDataContentDisposition fileDetail) throws IOException {
 
 		// save it
 		ProcessDef process = ProcessHelper.importProcessAsStream(fileDetail.getFileName(),fileDetail.getSize(), uploadedInputStream);

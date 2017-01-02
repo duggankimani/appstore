@@ -14,6 +14,12 @@
 	rel="stylesheet" media="screen,projection" />
 <link href="css/style.css" type="text/css" rel="stylesheet"
 	media="screen,projection" />
+	
+<script type="text/javascript">
+	function submitAndReload(){
+		
+	}
+</script>
 </head>
 
 <body>
@@ -84,7 +90,8 @@
 			<li class="no-padding">
 				<ul class="collapsible collapsible-accordion">
 					<li><a class="collapsible-header">HR & ADMIN<i
-							class="material-icons">arrow_drop_down</i> </a>
+							class="material-icons">arrow_drop_down</i>
+					</a>
 						<div class="collapsible-body">
 							<ul>
 								<li><a href="#!">First</a></li>
@@ -92,8 +99,7 @@
 								<li><a href="#!">Third</a></li>
 								<li><a href="#!">Fourth</a></li>
 							</ul>
-						</div>
-					</li>
+						</div></li>
 				</ul>
 			</li>
 		</ul>
@@ -169,13 +175,13 @@
 									<ul class="tabs">
 										<li class="tab col s3"><a class="active" href="#test1">Existing
 												Process</a></li>
-										<li class="tab col s3"><a  href="#test2">New
-												Process</a></li>
-										
+										<li class="tab col s3"><a href="#test2">New Process</a></li>
+
 									</ul>
 								</div>
-								<div id="test1" class="col s12"><form class="col s12">
-										
+								<div id="test1" class="col s12">
+									<form class="col s12" action="api/upload/process" method="POST" enctype="multipart/form-data">
+
 										<div class="row">
 
 											<div class="file-field input-field">
@@ -184,20 +190,19 @@
 														type="file">
 												</div>
 												<div class="file-path-wrapper">
-													<input name="process_zip" class="file-path validate"
-														type="text">
+													<input name="file" class="file-path validate" type="text">
 												</div>
 											</div>
 
 										</div>
-										
+
 										<div class="row">
 											<div class="input-field col s12">
 												<input id="name" type="text" disabled class="validate">
 												<label for="name">Name</label>
 											</div>
 										</div>
-										
+
 										<div class="row">
 											<div class="input-field col s12">
 												<input id="description" type="text" class="validate">
@@ -227,9 +232,8 @@
 											</button>
 
 										</div>
-
-
-									</form></div>
+									</form>
+								</div>
 								<div id="test2" class="col s12">
 									<!-- Form -->
 									<form class="col s12">
@@ -253,8 +257,8 @@
 											</div>
 										</div>
 
-										
-										
+
+
 										<div class="row">
 
 											<div class="file-field input-field">
@@ -301,7 +305,7 @@
 
 											<div class="file-field input-field">
 												<div class="btn">
-													<span>Process Zip Upload</span> <input name="process_zip"
+													<span>Process Zip Upload</span> <input name="file"
 														type="file">
 												</div>
 												<div class="file-path-wrapper">
@@ -338,7 +342,7 @@
 
 									</form>
 								</div>
-								
+
 							</div>
 
 						</div>
