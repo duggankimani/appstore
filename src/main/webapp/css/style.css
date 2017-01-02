@@ -9,6 +9,12 @@ body {
 	background: #eeeeee;
 }
 
+.file-field input[type="file"] {
+
+	font-size: 13px!Important;
+		
+}
+
 .form-wrapper a {
 	width: 55%;
 }

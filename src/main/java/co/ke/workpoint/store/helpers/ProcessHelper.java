@@ -35,7 +35,7 @@ public class ProcessHelper {
 	static final Logger log = Logger.getLogger(ProcessHelper.class);
 	static final String OUTPUT_FOLDER = "output";
 	
-	public static void importProcessAsStream(String name, long size,
+	public static ProcessDef importProcessAsStream(String name, long size,
 			InputStream is) throws IOException {
 		log.info("Importing process from inputstream {name:" + name + ", size:"
 				+ (size / 1024) + "kb}");
@@ -64,13 +64,17 @@ public class ProcessHelper {
 		fos.close();
 		is.close();
 
-		importProcessAsZip(zipFilePath.toString());
+		ProcessDef process =  importProcessAsZip(zipFilePath.toString());
 
 		zipFilePath.toFile().delete();
+		
+		return process;
 	}
 
-	public static void importProcessAsZip(String zipFileName) {
+	public static ProcessDef importProcessAsZip(String zipFileName) {
 
+		ProcessDef process = null;
+		
 		log.info("Importing zip file " + zipFileName);
 		// create output directory is not exists
 
@@ -143,7 +147,7 @@ public class ProcessHelper {
 				is.close();
 			}
 
-			importProcess(root);
+			process = importProcess(root);
 		} catch (FileSystemException fse) {
 			log.fatal("importProcessAsZip threw FileSystemException msg: "
 					+ fse.getMessage() + ": reason " + fse.getReason()
@@ -171,6 +175,7 @@ public class ProcessHelper {
 					+ ", cause: " + e.getMessage());
 		}
 
+		return process;
 	}
 
 	/**
@@ -178,7 +183,9 @@ public class ProcessHelper {
 	 * 
 	 * @param rootPath
 	 */
-	private static void importProcess(Path rootPath) {
+	private static ProcessDef importProcess(Path rootPath) {
+		
+		ProcessDef processDef = null;
 		Path processPath = rootPath.resolve("process.json");
 		try {
 
@@ -189,8 +196,7 @@ public class ProcessHelper {
 			log.info("Importing process ID: "
 					+ processJson.getString(ProcessDef.ID) + ", Name:"
 					+ processJson.getString(ProcessDef.NAME));
-
-			ProcessDef processDef = new ProcessDef();
+			processDef = new ProcessDef();
 			processDef.setRefId(processJson.getString(ProcessDef.ID));
 			processDef.setName(processJson.getString(ProcessDef.NAME));
 			processDef
@@ -275,6 +281,7 @@ public class ProcessHelper {
 			throw new RuntimeException(jsonEx);
 		}
 
+		return processDef;
 	}
 	
 	
@@ -297,6 +304,13 @@ public class ProcessHelper {
 	}
 	
 	private static ProcessDef create(final ProcessDef processDef) {
+		if(processDef.getRefId()!=null){
+			Integer id = checkExists(processDef.getRefId());
+			if(id!=null){
+				return update(id, processDef);
+			}
+		}
+		
 		DBExecute<ProcessDef> processSave = new DBExecute<ProcessDef>() {
 			@Override
 			protected String getQueryString() {
