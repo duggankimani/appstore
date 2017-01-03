@@ -151,6 +151,39 @@ footer.page-footer {
 	margin: 0 !important;
 }
 
+.navButtons{
+
+	margin-top: 10px;	
+	
+}
+
+.processItem{
+
+	cursor:pointer;
+	
+}
+
+.processItem:hover{
+
+	cursor:pointer;
+	border:2px solid #eeeeee;
+	opacity:0.8;
+	
+}
+
+.searchbar{
+
+	margin-bottom: 0px!important;	
+	height:47px;
+	
+}
+
+.listingsHeader{
+
+	 min-height: 45px;	
+	
+}
+
 .cards_details {
 	/*height: 500px!important;*/
 }
