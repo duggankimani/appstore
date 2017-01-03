@@ -103,23 +103,21 @@ $(document)
 										var status = data[items]['status'];
 										var classDeactivate = "";
 
-								
-										
-										
+	
 										if (isActive == "1") {
 
 											htmlDataActive += "<div  id='"
 													+ refId
-													+ "' function=showDetails('"+ refId +"'); class='processItem col s12 m3 "
+													+ "' class='processItem col s12 m3 "
 													+ classDeactivate + "'>";
-											htmlDataActive += "<div style='background:"+ backgroundColor +"' class='card cards_listing'>";
+											htmlDataActive += "<a href='details.html?id="+ refId +"'><div style='background:"+ backgroundColor +"' class='card cards_listing'>";
 											htmlDataActive += "<h2 class='center light-blue-text'>"
 											htmlDataActive += "<i class='"
 													+ iconStyle + "'></i>";
 											htmlDataActive += "</h2>"
 											htmlDataActive += "<div class='card-content'>"
 											htmlDataActive += "<h5 class='center'>"
-													+ name + "</h5>"
+													+ name + "</h5></a>"
 											htmlDataActive += "</div>";
 											htmlDataActive += "<div class='card-action'>";
 											htmlDataActive += "<a href='details.html'>VIEW</a><span class='free' href='#'>FREE</span>";
@@ -133,26 +131,24 @@ $(document)
 													+ refId
 													+ "' class='col s12 m3 "
 													+ classDeactivate + "'>";
-											htmlDataInActive += "<div style='background:"+ backgroundColor +"' class='card cards_listing'>";
+											htmlDataInActive += "<a href='details.html?id="+ refId +"'><div style='background:"+ backgroundColor +"' class='card cards_listing'>";
 											htmlDataInActive += "<h2 class='center light-blue-text'>"
 											htmlDataInActive += "<i class='"
 													+ iconStyle + "'></i>";
 											htmlDataInActive += "</h2>"
 											htmlDataInActive += "<div class='card-content'>"
 											htmlDataInActive += "<h5 class='center'>"
-													+ name + "</h5>"
+													+ name + "</h5></a>"
 											htmlDataInActive += "</div>";
 											htmlDataInActive += "<div class='card-action'>";
 											htmlDataInActive += "<a href='details.html'>VIEW</a><span class='free' href='#'>FREE</span>";
 											htmlDataInActive += "</div></div></div>";
 
 										}
-
 									}
 
 									$("#available_processes").html("");
 									$("#upcoming_processes").html("");
-
 									$("#available_processes").html(
 											htmlDataActive);
 									$("#upcoming_processes").html(

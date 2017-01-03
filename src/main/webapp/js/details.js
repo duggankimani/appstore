@@ -22,7 +22,50 @@ $(document)
 
 					};
 					
+					refId = getUrlParameter('id');
 					
-					alert(getUrlParameter("id"));
+					$
+					.ajax({
+						url : 'api/processes/'+refId,
+						async : false,
+						success : function(data) {
+
+							
+
+								var refId = data['refId'];
+								var isActive = data['isActive'];
+								var id = data['id'];
+								var name = data['name'];
+								var description = data['description'];
+								var iconStyle = data['iconStyle'];
+								var backgroundColor = data['backgroundColor'];
+								var processIcon = data['processIcon'];
+								var category = data['category'];
+								var status = data['status'];
+								var classDeactivate = "";
+								
+								//alert(getUrlParameter("id"));
+								
+								$(".detail_name").html(name);
+								$(".detail_description").html(description);
+								$(".detail_category").html(category);
+
+
+						},
+						fail : function() {
+							alert("f");
+						},
+						complete : function(data) {
+							
+							
+
+						},
+						error : function(XMLHttpRequest, textStatus,
+								errorThrown) {
+
+						}
+					});
+					
+					
 
 				});
