@@ -38,9 +38,8 @@ $(".ExistingDataForm").on("submit", function(e) {
 
 });
 
-function showDetails(e){
+function showDetails(id){
 	
-	var id = event.target.id;
 	alert(id);
 	//id = id.split('_');
 	window.location.replace("details.html?id="+id);										

@@ -194,6 +194,10 @@ footer.page-footer {
 	padding: 5px !important;
 }
 
+.card-action {
+	background: #fff!important;
+}
+
 .card .card-action a {
 	font-size: 11px;
 }
