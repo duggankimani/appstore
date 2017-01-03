@@ -157,6 +157,27 @@ footer.page-footer {
 	
 }
 
+.processItem{
+
+	cursor:pointer;
+	
+}
+
+.processItem:hover{
+
+	cursor:pointer;
+	border:2px solid #eeeeee;
+	opacity:0.8;
+	
+}
+
+.searchbar{
+
+	margin-bottom: 0px!important;	
+	height:47px;
+	
+}
+
 .listingsHeader{
 
 	 min-height: 45px;	

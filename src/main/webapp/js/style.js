@@ -4,6 +4,8 @@ $('.carousel.carousel-slider').carousel({
 
 $('select').material_select('destroy');
 
+
+
 $(".ExistingDataForm").on("submit", function(e) {
 
 	// var data = JSON.stringify( $('#ExistingDataForm').serializeArray() );
@@ -41,6 +43,8 @@ $(document)
 		.ready(
 				function() {
 
+					
+					
 					$('select').material_select();
 
 					/*
@@ -72,12 +76,13 @@ $(document)
 									var htmlDataActive = "";
 
 									// Header Definition
-									htmlDataActive = "<div class='col s12 m10'><h5>Available Processes</h5><p><span>" + data.length + "</span> Processes</p></div>";
+									htmlDataActive = "<div class='col s12 m10'><h5>Available Processes</h5><p><span>"
+											+ data.length
+											+ "</span> Processes</p></div>";
 
 									// Header Definition
 									htmlDataInActive = "<div class='col s12 m10'><h5>Upcoming Processes</h5><p><span>0</span> Processes</p></div>";
 
-									
 									for ( var items in data) {
 
 										var refId = data[items]['refId'];
@@ -94,7 +99,9 @@ $(document)
 
 										if (isActive == "1") {
 
-											htmlDataActive += "<div class='col s12 m3 "
+											htmlDataActive += "<div id='id_"
+													+ id
+													+ "' class='processItem col s12 m3 "
 													+ classDeactivate + "'>";
 											htmlDataActive += "<div class='card cards_listing'>";
 											htmlDataActive += "<p class='center listingsHeader'>"
@@ -138,7 +145,7 @@ $(document)
 
 									$("#available_processes").html("");
 									$("#upcoming_processes").html("");
-									
+
 									$("#available_processes").html(
 											htmlDataActive);
 									$("#upcoming_processes").html(
@@ -149,6 +156,13 @@ $(document)
 									alert("f");
 								},
 								complete : function(data) {
+									
+									$(".processItem").click(function(e) {
+										var id = e.target.id;
+										id = id.split('_');
+										window.location.replace("details.html");
+
+									});
 									// alert("c");
 
 									/*
