@@ -140,6 +140,7 @@ footer.page-footer {
 	border-radius: 0 0 2px 2px;
 	min-height: 58px;
 	padding: 4px;
+	color:#fff!important;
 }
 
 .card .card-content h5 {
@@ -149,6 +150,7 @@ footer.page-footer {
 .cards_listing i {
 	font-size: 100px !important;
 	margin: 0 !important;
+	color:#fff;
 }
 
 .navButtons{

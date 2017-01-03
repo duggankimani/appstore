@@ -5,7 +5,6 @@ $('.carousel.carousel-slider').carousel({
 $('select').material_select('destroy');
 
 
-
 $(".ExistingDataForm").on("submit", function(e) {
 
 	// var data = JSON.stringify( $('#ExistingDataForm').serializeArray() );
@@ -39,13 +38,21 @@ $(".ExistingDataForm").on("submit", function(e) {
 
 });
 
+function showDetails(e){
+	
+	var id = event.target.id;
+	alert(id);
+	//id = id.split('_');
+	window.location.replace("details.html?id="+id);										
+	//appstore/api/processes/p4LppspxJS7yF61q
+										
+}
+
 $(document)
 		.ready(
 				function() {
 
-					
-					
-					$('select').material_select();
+            		$('select').material_select();
 
 					/*
 					 * var jsonProcesses = '{"refId":"Z3KVjUt31OVrmcJc", +
@@ -97,22 +104,23 @@ $(document)
 										var status = data[items]['status'];
 										var classDeactivate = "";
 
+								
+										
+										
 										if (isActive == "1") {
 
-											htmlDataActive += "<div id='id_"
-													+ id
-													+ "' class='processItem col s12 m3 "
+											htmlDataActive += "<div  id='"
+													+ refId
+													+ "' function=showDetails(this); class='processItem col s12 m3 "
 													+ classDeactivate + "'>";
-											htmlDataActive += "<div class='card cards_listing'>";
-											htmlDataActive += "<p class='center listingsHeader'>"
-													+ name + "</p>"
+											htmlDataActive += "<div style='background:"+ backgroundColor +"' class='card cards_listing'>";
 											htmlDataActive += "<h2 class='center light-blue-text'>"
 											htmlDataActive += "<i class='"
 													+ iconStyle + "'></i>";
 											htmlDataActive += "</h2>"
 											htmlDataActive += "<div class='card-content'>"
 											htmlDataActive += "<h5 class='center'>"
-													+ description + "</h5>"
+													+ name + "</h5>"
 											htmlDataActive += "</div>";
 											htmlDataActive += "<div class='card-action'>";
 											htmlDataActive += "<a href='details.html'>VIEW</a><span class='free' href='#'>FREE</span>";
@@ -122,18 +130,18 @@ $(document)
 
 										} else if (isActive == "0") {
 
-											htmlDataInActive += "<div class='col s12 m3 "
+											htmlDataInActive += "<div  id='"
+													+ refId
+													+ "' class='col s12 m3 "
 													+ classDeactivate + "'>";
-											htmlDataInActive += "<div class='card cards_listing'>";
-											htmlDataInActive += "<p class='center listingsHeader'>"
-													+ name + "</p>"
+											htmlDataInActive += "<div style='background:"+ backgroundColor +"' class='card cards_listing'>";
 											htmlDataInActive += "<h2 class='center light-blue-text'>"
 											htmlDataInActive += "<i class='"
 													+ iconStyle + "'></i>";
 											htmlDataInActive += "</h2>"
 											htmlDataInActive += "<div class='card-content'>"
 											htmlDataInActive += "<h5 class='center'>"
-													+ description + "</h5>"
+													+ name + "</h5>"
 											htmlDataInActive += "</div>";
 											htmlDataInActive += "<div class='card-action'>";
 											htmlDataInActive += "<a href='details.html'>VIEW</a><span class='free' href='#'>FREE</span>";
@@ -157,23 +165,8 @@ $(document)
 								},
 								complete : function(data) {
 									
-									$(".processItem").click(function(e) {
-										var id = e.target.id;
-										id = id.split('_');
-										window.location.replace("details.html");
-
-									});
-									// alert("c");
-
-									/*
-									 * var t = data; var data =
-									 * t.replace(/&quot;/ig,'"'); dataRes =
-									 * jQuery.parseJSON(data); var
-									 * $mainDetailsArr = dataRes[0];
-									 * alert($mainDetailsArr);
-									 */
-
-									// $("#spotlightList").html($htmlSpotlightYoutube);
+									
+	
 								},
 								error : function(XMLHttpRequest, textStatus,
 										errorThrown) {
