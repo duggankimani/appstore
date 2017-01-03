@@ -31,6 +31,7 @@ $(document).ready(function() {
 		async : false,
 		success : function(data) {
 
+			data['refId']);
 			
 
 		},
@@ -38,6 +39,8 @@ $(document).ready(function() {
 			alert("f");
 		},
 		complete : function(data) {
+			
+			
                //alert("c");
 			
 		/*	var t = data;

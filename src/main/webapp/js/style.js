@@ -2,12 +2,42 @@ $('.carousel.carousel-slider').carousel({
 	full_width : true
 });
 
-
 $('select').material_select('destroy');
-          
+
+
+$(".ExistingDataForm").on("submit", function (e) {
+    
+	//var data = JSON.stringify( $('#ExistingDataForm').serializeArray() );
+	var data = $('#ExistingDataForm').serialize() ;
+	
+	e.preventDefault();
+	$.ajax({
+		url : 'api/upload/process',
+		contentType: 'multipart/form-data',
+	    type: 'POST',
+	    data : data,
+		success : function(data) {
+
+			alert(data);
+
+		},
+		fail : function() {
+
+			// showPleaseWait(false);
+
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+
+			// showPleaseWait(false);
+
+		}
+	});
+
+});
+
 
 $(document).ready(function() {
-	
+
 	$('select').material_select();
 
 	/*
@@ -31,23 +61,20 @@ $(document).ready(function() {
 		async : false,
 		success : function(data) {
 
-			
-
 		},
 		fail : function() {
 			alert("f");
 		},
 		complete : function(data) {
-               //alert("c");
-			
-		/*	var t = data;
-			var data = t.replace(/&quot;/ig,'"');
-   			dataRes = jQuery.parseJSON(data);
-   			var $mainDetailsArr = dataRes[0];
-   			alert($mainDetailsArr);*/
-   			
+			// alert("c");
 
-   			//$("#spotlightList").html($htmlSpotlightYoutube);
+			/*
+			 * var t = data; var data = t.replace(/&quot;/ig,'"'); dataRes =
+			 * jQuery.parseJSON(data); var $mainDetailsArr = dataRes[0];
+			 * alert($mainDetailsArr);
+			 */
+
+			// $("#spotlightList").html($htmlSpotlightYoutube);
 		},
 		error : function(XMLHttpRequest, textStatus, errorThrown) {
 
