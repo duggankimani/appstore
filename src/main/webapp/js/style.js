@@ -111,7 +111,7 @@ $(document)
 
 											htmlDataActive += "<div  id='"
 													+ refId
-													+ "' function=showDetails(this); class='processItem col s12 m3 "
+													+ "' function=showDetails('"+ refId +"'); class='processItem col s12 m3 "
 													+ classDeactivate + "'>";
 											htmlDataActive += "<div style='background:"+ backgroundColor +"' class='card cards_listing'>";
 											htmlDataActive += "<h2 class='center light-blue-text'>"
