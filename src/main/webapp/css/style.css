@@ -151,6 +151,18 @@ footer.page-footer {
 	margin: 0 !important;
 }
 
+.navButtons{
+
+	margin-top: 10px;	
+	
+}
+
+.listingsHeader{
+
+	 min-height: 45px;	
+	
+}
+
 .cards_details {
 	/*height: 500px!important;*/
 }
