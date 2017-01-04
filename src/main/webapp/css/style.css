@@ -19,6 +19,13 @@ body {
 	width: 55%;
 }
 
+#category_listings li{
+	
+	list-style: none;
+	text-transform: uppercase;
+	font-size: 12px; 
+}
+
 .deactivate {
 	opacity: 0.4;
 }
