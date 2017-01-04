@@ -17,8 +17,10 @@ import java.nio.file.attribute.PosixFilePermissions;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -28,6 +30,7 @@ import org.apache.log4j.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import co.ke.workpoint.store.ProcessResource;
 import co.ke.workpoint.store.dao.DBExecute;
 import co.ke.workpoint.store.model.Category;
 import co.ke.workpoint.store.model.ProcessDef;
@@ -472,5 +475,169 @@ public class ProcessHelper {
 
 		return exec.executeDbCall();
 	}
+	
+	
+	public static List<Category> getCategories() {
+
+		DBExecute<List<Category>> exec = new DBExecute<List<Category>>() {
+			@Override
+			protected String getQueryString() {
+				return "select id, refid, name from category";
+			}
+
+			@Override
+			protected List<Category> processResults(PreparedStatement pStmt, boolean hasResults) throws SQLException {
+
+				ResultSet rs = getResultSet();
+				
+				List<Category> categories = new ArrayList<Category>();
+				while (rs.next()) {
+					Category cat = new Category();
+					cat.setId(rs.getInt(1));
+					cat.setRefId(rs.getString(2));
+					cat.setName(rs.getString(3));
+					categories.add(cat);
+				}
+				
+				return categories;
+			}
+
+			@Override
+			protected void setParameters() throws SQLException {
+			}
+		};
+
+		return exec.executeDbCall();
+	}
+
+	public static Category getCategoryByRefId(final String refId) {
+
+			DBExecute<Category> exec = new DBExecute<Category>() {
+				@Override
+				protected String getQueryString() {
+					return "select id, refid, name from category where refId=?";
+				}
+
+				@Override
+				protected Category processResults(PreparedStatement pStmt, boolean hasResults) throws SQLException {
+
+					ResultSet rs = getResultSet();
+					Category cat = null;
+					if (rs.next()) {
+						cat = new Category();
+						cat.setId(rs.getInt(1));
+						cat.setRefId(rs.getString(2));
+						cat.setName(rs.getString(3));
+					}
+					return cat;
+				}
+
+				@Override
+				protected void setParameters() throws SQLException {
+					setString(1, refId);
+				}
+			};
+
+			return exec.executeDbCall();
+		}
+
+	public static List<ProcessDef> getProcessesByCategoryId(final String categoryRefId) {
+		DBExecute<List<ProcessDef>> exec = new DBExecute<List<ProcessDef>>() {
+			@Override
+			protected String getQueryString() {
+				if(categoryRefId==null || categoryRefId.equals(ProcessResource.ALL)){
+					return "select id, refid, name, description, iconstyle, "
+							+ "backgroundcolor, processicon, status, category from processdef";
+				}else{
+					return "select p.id, p.refid, p.name, p.description, p.iconstyle, "
+							+ "p.backgroundcolor, p.processicon, p.status, p.category "
+							+ "from processdef p where p.category=(select name from category where refid=?)";
+				}
+				
+			}
+
+			@Override
+			protected List<ProcessDef> processResults(PreparedStatement pStmt,
+					boolean hasResults) throws SQLException {
+				ResultSet rs = getResultSet();
+
+				List<ProcessDef> list = new ArrayList<ProcessDef>();
+				while (rs.next()) {
+					ProcessDef def = new ProcessDef();
+					def.setId(rs.getInt(1));
+					def.setRefId(rs.getString(2));
+					def.setName(rs.getString(3));
+					def.setDescription(rs.getString(4));
+					def.setIconStyle(rs.getString(5));
+					def.setBackgroundColor(rs.getString(6));
+					def.setProcessIcon(rs.getString(7));
+					Status status = Status.values()[rs.getInt(8)];
+					def.setStatus(status);
+					def.setCategory(rs.getString(9));
+					list.add(def);
+				}
+				return list;
+			}
+
+			@Override
+			protected void setParameters() throws SQLException {
+				if(categoryRefId!=null && !categoryRefId.equals(ProcessResource.ALL)){
+					setString(1, categoryRefId);
+				}
+			}
+		};
+
+		return exec.executeDbCall();
+	}
+
+	public static List<ProcessDef> getFavoriteProcessesByCategoryId(final String categoryRefId) {
+		DBExecute<List<ProcessDef>> exec = new DBExecute<List<ProcessDef>>() {
+			@Override
+			protected String getQueryString() {
+				if(categoryRefId==null || categoryRefId.equals(ProcessResource.ALL)){
+					return "select id, refid, name, description, iconstyle, "
+							+ "backgroundcolor, processicon, status, category from processdef";
+				}else{
+					return "select p.id, p.refid, p.name, p.description, p.iconstyle, "
+							+ "p.backgroundcolor, p.processicon, p.status, p.category "
+							+ "from processdef p where p.category=(select name from category where refid=?)";
+				}
+				
+			}
+
+			@Override
+			protected List<ProcessDef> processResults(PreparedStatement pStmt,
+					boolean hasResults) throws SQLException {
+				ResultSet rs = getResultSet();
+
+				List<ProcessDef> list = new ArrayList<ProcessDef>();
+				while (rs.next()) {
+					ProcessDef def = new ProcessDef();
+					def.setId(rs.getInt(1));
+					def.setRefId(rs.getString(2));
+					def.setName(rs.getString(3));
+					def.setDescription(rs.getString(4));
+					def.setIconStyle(rs.getString(5));
+					def.setBackgroundColor(rs.getString(6));
+					def.setProcessIcon(rs.getString(7));
+					Status status = Status.values()[rs.getInt(8)];
+					def.setStatus(status);
+					def.setCategory(rs.getString(9));
+					list.add(def);
+				}
+				return list;
+			}
+
+			@Override
+			protected void setParameters() throws SQLException {
+				if(categoryRefId!=null && !categoryRefId.equals(ProcessResource.ALL)){
+					setString(1, categoryRefId);
+				}
+			}
+		};
+
+		return exec.executeDbCall();
+	}
+
 
 }
