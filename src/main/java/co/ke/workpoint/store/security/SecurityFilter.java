@@ -8,14 +8,11 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
-
-import co.ke.workpoint.store.helpers.ServerConstants;
 
 public class SecurityFilter implements Filter {
 
@@ -42,17 +39,19 @@ public class SecurityFilter implements Filter {
 
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 
-		boolean isValid = false;
+		boolean isValid = true;
 
-		if (!httpRequest.getMethod().equalsIgnoreCase("GET")) {
+		//url method is not GET or resource is not an api resource.
+		logger.info("Security Filter - Request Url = "+httpRequest.getRequestURI());
+		boolean securedResource = !httpRequest.getMethod().equalsIgnoreCase("GET") || !httpRequest.getRequestURI().contains("api"); 
+		if (securedResource) {
 			HttpSession session = httpRequest.getSession(false);
 			if (session == null) {
+				isValid = false;
 				logger.debug("A session does not exist for this request!");
 				returnError(request, response,
 						"A session does not exist for this request!");
 				return;
-			}else{
-				isValid = true;
 			}
 		}
 
@@ -76,13 +75,17 @@ public class SecurityFilter implements Filter {
 	}
 
 	/** Accepts error string, forwards to error page with error. */
-	private void returnError(ServletRequest request, ServletResponse aResponse,
+	private void returnError(ServletRequest aRequest, ServletResponse aResponse,
 			String errorString) throws ServletException, IOException {
+		HttpServletRequest request = (HttpServletRequest)aRequest; 
 		HttpServletResponse response = ((HttpServletResponse) aResponse);
 		response.setStatus(403);
 		response.setContentType("text/html");
 		response.getWriter().print(errorString);
-		response.sendRedirect(loginPage);
+		
+		String redirect = "?redirect="+request.getRequestURI();
+		
+		response.sendRedirect(loginPage+redirect);
 	}
 
 	@Override

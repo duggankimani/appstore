@@ -1,0 +1,45 @@
+<!doctype html>
+<!-- The DOCTYPE declaration above will set the    -->
+<!-- browser's rendering engine into               -->
+<!-- "Standards Mode". Replacing this declaration  -->
+<!-- with a "Quirks Mode" doctype may lead to some -->
+<!-- differences in layout.                        -->
+
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="google-signin-client_id"
+	content="631292106887-7bemucklm2qtsbsc2933l3bfin9bp9pb.apps.googleusercontent.com">
+
+<!-- BootStrap start -->
+<title>WIRA</title>
+<!-- Google OAuth Client -->
+<title>Insert title here</title>
+</head>
+<body>
+
+	<div style="margin:auto; width:400px;background-color: white; padding: 4px; font-family: sans-serif;">
+		<div class="">
+			<div id="curr-user-cell" style="color: green"></div>
+			<div id="user-id" style="color: cyan"></div>
+			<div id="user-scopes" style="color: orange"></div>
+			<div id="auth-response" style="color: blue"></div>
+			<div id="signed-in-cell" style="color: yellow"></div>
+		</div>
+		<div class="">
+			<div id="Google_Login" class="g-signin2" data-onsuccess="onSignIn"
+				data-width="369"></div>
+		</div>
+		<noscript>
+			<div>
+				Your web browser must have JavaScript enabled in order for this
+				application to display correctly.</div>
+		</noscript>
+	</div>
+	<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script type="text/javascript" src="js/login.js"></script>
+	<script src="https://apis.google.com/js/client:platform.js?onload=start"
+	async defer></script>
+</body>
+</html>
