@@ -5,7 +5,7 @@ $('.carousel.carousel-slider').carousel({
 $('select').material_select('destroy');
 
 
-$(".ExistingDataForm").on("submit", function(e) {
+/*$(".ExistingDataForm").on("submit", function(e) {
 
 	// var data = JSON.stringify( $('#ExistingDataForm').serializeArray() );
 	var data = $('#ExistingDataForm').serialize();
@@ -36,7 +36,9 @@ $(".ExistingDataForm").on("submit", function(e) {
 		}
 	});
 
-});
+});*/
+
+
 
 function showDetails(id){
 	
@@ -50,7 +52,19 @@ function showDetails(id){
 $(document)
 		.ready(
 				function() {
-
+					
+					$(function() {
+					    $('.submit').click(function() {
+					    	
+					    	//alert("MMNS");
+					        $('#existingDataForm').submit();
+					        //parent.refreshIframe();
+					        //return false;
+					        
+					    }); 
+					});
+					
+					
             		$('select').material_select();
 
 					/*
