@@ -598,11 +598,11 @@ public class ProcessHelper {
 			protected String getQueryString() {
 				if(categoryRefId==null || categoryRefId.equals(ProcessResource.ALL)){
 					return "select id, refid, name, description, iconstyle, "
-							+ "backgroundcolor, processicon, status, category from processdef";
+							+ "backgroundcolor, processicon, status, category from processdef limit 5";
 				}else{
 					return "select p.id, p.refid, p.name, p.description, p.iconstyle, "
 							+ "p.backgroundcolor, p.processicon, p.status, p.category "
-							+ "from processdef p where p.category=(select name from category where refid=?)";
+							+ "from processdef p where p.category=(select name from category where refid=? limit 5)";
 				}
 				
 			}

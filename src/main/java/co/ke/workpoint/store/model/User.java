@@ -4,10 +4,10 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name="user")
+@XmlRootElement(name = "user")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class User extends PO{
-	
+public class User extends PO {
+
 	/**
 	 * 
 	 */
@@ -18,11 +18,12 @@ public class User extends PO{
 	private String lastName;
 	private String email;
 	private String userId;
-	
-	public User(){}
-	
-	public User(String email){
-		
+
+	public User() {
+	}
+
+	public User(String email) {
+
 	}
 
 	public String getFirstName() {
@@ -63,5 +64,34 @@ public class User extends PO{
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public boolean isSame(String email, String familyName, String givenName,
+			int status) {
+
+		if (isSame(familyName, this.lastName)
+				&& isSame(givenName, this.firstName)
+				&& isSame(this.getIsActive(), status)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean isSame(String str1, String str2) {
+		if (str1 == null ^ str2 == null) {
+			//xor
+			return false;
+		}
+
+		if (str1 != null) {
+			return str1.equals(str2);
+		}
+		
+		return false;
+	}
+
+	private boolean isSame(int isActive, int status) {
+		return isActive == status;
 	}
 }

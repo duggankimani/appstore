@@ -17,6 +17,7 @@
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
+
 	<servlet-mapping>
 		<servlet-name>Jersey Web Application</servlet-name>
 		<url-pattern>/api/*</url-pattern>
@@ -26,7 +27,74 @@
 		<listener-class>co.ke.workpoint.store.util.BootHandler</listener-class>
 	</listener>
 
-	<!-- filter> <filter-name>TransactionFilter</filter-name> <filter-class>co.ke.workpoint.store.transaction.TransactionFilter</filter-class> 
-		</filter> <filter-mapping> <filter-name>TransactionFilter</filter-name> <url-pattern>/api/*</url-pattern> 
-		</filter-mapping -->
+	<!--API Filter that handles site authorization. -->
+	<filter>
+		<filter-name>SecurityFilter</filter-name>
+		<filter-class>co.ke.workpoint.store.security.SecurityFilter</filter-class>
+		<description>This Filter authorizes user access to application
+	                  components based upon request URI.</description>
+		<init-param>
+			<param-name>login_page</param-name>
+			<param-value>login.html</param-value>
+		</init-param>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>SecurityFilter</filter-name>
+		<url-pattern>/api/*</url-pattern>
+		<url-pattern>/addprocess.html</url-pattern>
+	</filter-mapping>
+	
+	<!-- GOOGLE OAUTH LOGIN SERVLET -->
+	<servlet>
+	    <servlet-name>GoogleLoginServlet</servlet-name>
+	    <servlet-class>co.ke.workpoint.store.security.GoogleLoginServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+	    <servlet-name>GoogleLoginServlet</servlet-name>
+	    <url-pattern>/googleservlet</url-pattern>
+	</servlet-mapping>
+	
+	<!-- GOOGLE OAUTH LOGIN CALLBACK SERVLET -->
+	<servlet>
+	    <servlet-name>GoogleLoginCallbackServlet</servlet-name>
+	    <servlet-class>co.ke.workpoint.store.security.GoogleLoginCallbackServlet</servlet-class>
+	    <init-param>
+	        <param-name>app_page</param-name>
+	        <param-value>index.html</param-value>
+	     </init-param>
+	</servlet>
+	
+	<servlet-mapping>
+	    <servlet-name>GoogleLoginCallbackServlet</servlet-name>
+	    <url-pattern>/oauth2callback</url-pattern>
+	</servlet-mapping>
+	
+	<!-- GOOGLE OAUTH TOKEN VERIFICATION SERVLET -->
+	<servlet>
+	    <servlet-name>GoogleIdTokenVerifierService</servlet-name>
+	    <servlet-class>co.ke.workpoint.store.security.GoogleIdTokenVerifierService</servlet-class>
+	    <init-param>
+	        <param-name>app_page</param-name>
+	        <param-value>index.html</param-value>
+	     </init-param>
+	</servlet>
+	
+	<servlet-mapping>
+	    <servlet-name>GoogleIdTokenVerifierService</servlet-name>
+	    <url-pattern>/auth2tokencallback</url-pattern>
+	</servlet-mapping>
+	
+	
+
+	<!-- Transaction Filter -->
+	<filter>
+		<filter-name>TransactionFilter</filter-name>
+		<filter-class>co.ke.workpoint.store.transaction.TransactionFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>TransactionFilter</filter-name>
+		<url-pattern>/api/*</url-pattern>
+	</filter-mapping>
 </web-app>

@@ -82,9 +82,9 @@
 				class="btn waves-effect waves-light">Home</a>
 		</h5>
 
-	
+
 		<ul id="category_listings" class="right hide-on-med-and-down">
-			
+
 		</ul>
 
 	</div>
@@ -136,7 +136,7 @@
 
 		<div class="row">
 
-			<div class="col s12 m9 l10">
+			<div class="col s12 m11 l11">
 
 				<div class="section">
 
@@ -148,76 +148,76 @@
 								<div class="col s12">
 									<ul class="tabs">
 
-										<li class="tab col s3"><a class="active" href="#test1">Existing
-												Process</a>
-										</li>
-										<li class="tab col s3"><a href="#test2">New Process</a>
-										</li>
+										<li class="tab col s6"><a class="active" href="#test1">Existing
+												Process</a></li>
+										<li class="tab col s6"><a href="#test2">New Process</a></li>
 
 									</ul>
 								</div>
 								<div id="test1" class="col s12">
-									
-										<form id="existingDataForm" method="POST"
-											class="col s12 existingDataForm" action="api/upload/process"
-											enctype="multipart/form-data">
 
-											<div class="row">
+									<form id="existingDataForm" method="POST"
+										class="col s12 existingDataForm" action="api/upload/process"
+										enctype="multipart/form-data">
 
-												<div class="file-field input-field">
-													<div class="btn">
-														<span>Process Zip Upload</span> <input name="process_zip"
-															type="file">
-													</div>
-													<div class="file-path-wrapper">
-														<input name="file" class="file-path validate" type="text">
-													</div>
+										<div class="row">
+
+											<div class="file-field input-field">
+												<div class="btn">
+													<span>Process Zip Upload</span> <input name="process_zip"
+														type="file">
 												</div>
-
-											</div>
-
-											<div class="row">
-												<div class="input-field col s12">
-													<input id="name" type="text" disabled class="validate">
-													<label for="name">Name</label>
+												<div class="file-path-wrapper">
+													<input name="file" class="file-path validate" type="text">
 												</div>
 											</div>
 
-											<div class="row">
-												<div class="input-field col s12">
-													<input id="description" type="text" class="validate">
-													<label for="description">Description</label>
+										</div>
+
+										<div class="row">
+											<div class="input-field col s12">
+												<input id="name" type="text" disabled class="validate">
+												<label for="name">Name</label>
+											</div>
+										</div>
+
+										<div class="row">
+											<div class="input-field col s12">
+												<textarea name="description" class="materialize-textarea"></textarea>
+												<label for="description">Description</label>
+											</div>
+										</div>
+
+										<div class="row">
+
+											<div class="file-field input-field">
+												<div class="btn col s6">
+													<span>Screenshots</span> <input name="process_images"
+														type="file" multiple>
+												</div>
+												<div class="file-path-wrapper">
+													<input class="file-path validate" type="text">
 												</div>
 											</div>
 
-											<div class="row">
+										</div>
 
-												<div class="file-field input-field">
-													<div class="btn col s6">
-														<span>Screenshots</span> <input name="process_images"
-															type="file" multiple>
-													</div>
-													<div class="file-path-wrapper">
-														<input class="file-path validate" type="text">
-													</div>
-												</div>
+										<div class="row">
 
-											</div>
+											<button class="btn waves-effect waves-light submit"
+												type="submit" name="action">
+												Submit <i class="material-icons right">send</i>
+											</button>
 
-											<div class="row">
-
-												<button class="btn waves-effect waves-light submit"
-													type="submit" name="action">
-													Submit <i class="material-icons right">send</i>
-												</button>
-
-											</div>
-										</form>
+										</div>
+									</form>
 
 								</div>
 								<div id="test2" class="col s12">
 									<!-- Form -->
-									<form class="col s12">
+									<form id="newDataForm" method="POST"
+										class="col s12 newDataForm" action="api/categories/all/process"
+										enctype="multipart/form-data">
 										<div class="row">
 											<div class="input-field col s6">
 												<input name="name" type="text" class="validate"> <label
@@ -226,7 +226,7 @@
 										</div>
 										<div class="row">
 											<div class="input-field col s12">
-												<input name="description" type="text" class="validate">
+												<textarea name="description" class="materialize-textarea"></textarea>
 												<label for="description">Description</label>
 											</div>
 										</div>
@@ -238,7 +238,31 @@
 											</div>
 										</div>
 
+										<div class="row">
+											<div class="input-field col s12">
+												<input id="backgroundcolor" name="backgroundcolor"
+													type="text" class="validate"> <label
+													for="background Color">Background Color</label>
+											</div>
 
+										</div>
+
+										<div class="row">
+											<div class="input-field col s6">
+
+												<div class="col s3">
+													<label for="status">Status</label>
+												</div>
+
+												<div class="col s6">
+													<select class="browser-default" id="status" name="status">
+														<option value="0">Available</option>
+														<option value="1">Unavailable</option>
+													</select>
+												</div>
+
+											</div>
+										</div>
 
 										<div class="row">
 
@@ -253,33 +277,6 @@
 												</div>
 											</div>
 
-										</div>
-
-										<div class="row">
-											<div class="input-field col s12">
-												<input id="backgroundcolor" name="backgroundcolor"
-													type="text" class="validate"> <label
-													for="background Color">Background Color</label>
-											</div>
-
-										</div>
-
-
-										<div class="row">
-											<div class="input-field col s3">
-
-												<div class="col s3">
-													<label for="status">Status</label>
-												</div>
-
-												<div class="col s6">
-													<select class="browser-default" id="status" name="status">
-														<option value="0">Yes</option>
-														<option value="1">No</option>
-													</select>
-												</div>
-
-											</div>
 										</div>
 
 										<div class="row">
@@ -368,27 +365,19 @@
 					<div class="col l3 s12">
 						<h5 class="white-text">Settings</h5>
 						<ul>
-							<li><a class="white-text" href="#!">Link 1</a>
-							</li>
-							<li><a class="white-text" href="#!">Link 2</a>
-							</li>
-							<li><a class="white-text" href="#!">Link 3</a>
-							</li>
-							<li><a class="white-text" href="#!">Link 4</a>
-							</li>
+							<li><a class="white-text" href="#!">Link 1</a></li>
+							<li><a class="white-text" href="#!">Link 2</a></li>
+							<li><a class="white-text" href="#!">Link 3</a></li>
+							<li><a class="white-text" href="#!">Link 4</a></li>
 						</ul>
 					</div>
 					<div class="col l3 s12">
 						<h5 class="white-text">Connect</h5>
 						<ul>
-							<li><a class="white-text" href="#!">Link 1</a>
-							</li>
-							<li><a class="white-text" href="#!">Link 2</a>
-							</li>
-							<li><a class="white-text" href="#!">Link 3</a>
-							</li>
-							<li><a class="white-text" href="#!">Link 4</a>
-							</li>
+							<li><a class="white-text" href="#!">Link 1</a></li>
+							<li><a class="white-text" href="#!">Link 2</a></li>
+							<li><a class="white-text" href="#!">Link 3</a></li>
+							<li><a class="white-text" href="#!">Link 4</a></li>
 						</ul>
 					</div>
 				</div>
