@@ -1,3 +1,4 @@
+
 var showDetails = function showDetails(id) {
 
 	alert(id);
@@ -141,6 +142,8 @@ var loadCategories = function loadCategories(categoryid) {
 			// id='slide-out'
 			// class='side-nav'>";
 			// Header Definition
+			
+			var options = "";
 
 			for ( var items in data) {
 
@@ -166,12 +169,17 @@ var loadCategories = function loadCategories(categoryid) {
 					// "deactivate";
 
 				}
+				
+				options +="<option value="+name+">"+name+"</option>";
 			}
 
 			// htmlCategory += "</ul>";
 			// alert(htmlCategory);
 			htmlCategory += allUrl;
 			$("#category_listings").html(htmlCategory);
+			if($("#category").length){
+				$("#category").html(options);
+			}
 
 		},
 		fail : function() {

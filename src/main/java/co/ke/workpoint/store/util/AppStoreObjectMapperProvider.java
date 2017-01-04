@@ -5,6 +5,7 @@ import javax.ws.rs.ext.Provider;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.AnnotationIntrospector;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector;
@@ -36,6 +37,7 @@ public class AppStoreObjectMapperProvider implements
 		final ObjectMapper result = new ObjectMapper();
 		result.enable(SerializationFeature.INDENT_OUTPUT);
 		result.setSerializationInclusion(Include.NON_NULL);
+		result.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		return result;
 	}
 

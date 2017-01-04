@@ -157,7 +157,7 @@
 								<div id="test1" class="col s12">
 
 									<form id="existingDataForm" method="POST"
-										class="col s12 existingDataForm" action="api/upload/process"
+										class="col s12 existingDataForm" action="api/upload/process3"
 										enctype="multipart/form-data">
 
 										<div class="row">
@@ -215,9 +215,8 @@
 								</div>
 								<div id="test2" class="col s12">
 									<!-- Form -->
-									<form id="newDataForm" method="POST"
-										class="col s12 newDataForm" action="api/categories/all/process"
-										enctype="multipart/form-data">
+									<form id="newDataForm" method="POST" class="col s12 newDataForm">
+										<input type="hidden" name="refId"></input>
 										<div class="row">
 											<div class="input-field col s6">
 												<input name="name" type="text" class="validate"> <label
@@ -232,7 +231,21 @@
 										</div>
 										<div class="row">
 											<div class="input-field col s6">
-												<input name="iconstyle" name="iconstyle" type="text"
+
+												<div class="col s3">
+													<label for="status">Category</label>
+												</div>
+
+												<div class="col s8">
+													<select class="browser-default" id="category" name="category">
+													</select>
+												</div>
+
+											</div>
+										</div>
+										<div class="row">
+											<div class="input-field col s6">
+												<input name="iconstyle" name="iconStyle" type="text"
 													class="validate"> <label id="iconstyle">Icon
 													Style</label>
 											</div>
@@ -240,7 +253,7 @@
 
 										<div class="row">
 											<div class="input-field col s12">
-												<input id="backgroundcolor" name="backgroundcolor"
+												<input id="backgroundcolor" name="backgroundColor"
 													type="text" class="validate"> <label
 													for="background Color">Background Color</label>
 											</div>
@@ -256,15 +269,15 @@
 
 												<div class="col s6">
 													<select class="browser-default" id="status" name="status">
-														<option value="0">Available</option>
-														<option value="1">Unavailable</option>
+														<option value="AVAILABLE">Available</option>
+														<option value="UNAVAILABLE">Unavailable</option>
 													</select>
 												</div>
 
 											</div>
 										</div>
 
-										<div class="row">
+										<!-- div class="row">
 
 											<div class="file-field input-field">
 												<div class="btn">
@@ -306,13 +319,13 @@
 												</div>
 											</div>
 
-										</div>
+										</div -->
 
 										<div class="row">
 
 											<button class="btn waves-effect waves-light submit"
 												type="button" name="action">
-												Submit <i class="material-icons right">send</i>
+												Save <i class="material-icons right">send</i>
 											</button>
 
 										</div>
