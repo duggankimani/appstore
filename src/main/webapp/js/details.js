@@ -6,31 +6,16 @@ $(document)
 		.ready(
 				function() {
 
-					var getUrlParameter = function getUrlParameter(sParam) {
-						var sPageURL = decodeURIComponent(window.location.search
-								.substring(1)), sURLVariables = sPageURL
-								.split('&'), sParameterName, i;
-
-						for (i = 0; i < sURLVariables.length; i++) {
-							sParameterName = sURLVariables[i].split('=');
-
-							if (sParameterName[0] === sParam) {
-								return sParameterName[1] === undefined ? true
-										: sParameterName[1];
-							}
-						}
-
-					};
+					// Get Catgory
+					var categoryid = getUrlParameter('id');
+					// Load All Categories
+					// Check if Category ID is provided					
+					var nothing = loadCategories(categoryid);
 					
-					refId = getUrlParameter('id');
-					
-					$
-					.ajax({
-						url : 'api/processes/'+refId,
+					$.ajax({
+						url : 'api/categories/all/processes/'+categoryid,
 						async : false,
 						success : function(data) {
-
-							
 
 								var refId = data['refId'];
 								var isActive = data['isActive'];
@@ -42,8 +27,7 @@ $(document)
 								var processIcon = data['processIcon'];
 								var category = data['category'];
 								var status = data['status'];
-								var classDeactivate = "";
-								
+								var classDeactivate = "";							
 								//alert(getUrlParameter("id"));
 								
 								$(".detail_name").html(name);
