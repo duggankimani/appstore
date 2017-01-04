@@ -184,7 +184,9 @@ public class ProcessHelper {
 			throw new RuntimeException(ioe);
 		} finally {
 			try {
-				zipFile.close();
+				if(zipFile!=null){
+					zipFile.close();
+				}
 			} catch (IOException e) {
 				log.fatal("importProcessAsZip unable to close ZipInputStream: " + e.getMessage());
 				e.printStackTrace();
