@@ -130,7 +130,7 @@
 
 		<div class="row">
 
-			<div class="col s12 m11 l11">
+			<div class="col s12 m11 l11 card-panel">
 
 				<div class="section">
 
@@ -141,74 +141,13 @@
 							<div class="row">
 								<div class="col s12">
 									<ul class="tabs">
-
-										<li class="tab col s6"><a class="active" href="#test1">Existing
+										<li class="tab col s6"><a class="active" href="#new">New
 												Process</a></li>
-										<li class="tab col s6"><a href="#test2">New Process</a></li>
-
+										<li class="tab col s6"><a href="#upload">Upload
+												Process</a></li>
 									</ul>
 								</div>
-								<div id="test1" class="col s12">
-
-									<form id="existingDataForm" method="POST"
-										class="col s12 existingDataForm" action="api/upload/process3"
-										enctype="multipart/form-data">
-
-										<div class="row">
-											<div class="input-field col s12">
-												<input id="name" type="text" disabled class="validate">
-												<label for="name">Name</label>
-											</div>
-										</div>
-
-										<div class="row">
-											<div class="input-field col s12">
-												<textarea name="description" class="materialize-textarea"></textarea>
-												<label for="description">Description</label>
-											</div>
-										</div>
-
-										<div class="row">
-
-											<div class="file-field input-field">
-												<div class="btn s3">
-													<span>Process Zip</span> <input name="process_zip"
-														type="file">
-												</div>
-												<div class="file-path-wrapper">
-													<input name="file" class="file-path validate" type="text">
-												</div>
-											</div>
-
-										</div>
-
-
-										<div class="row">
-
-											<div class="file-field input-field">
-												<div class="btn col s3">
-													<span>Screenshots</span> <input name="process_images"
-														type="file" multiple>
-												</div>
-												<div class="file-path-wrapper">
-													<input class="file-path validate" type="text">
-												</div>
-											</div>
-
-										</div>
-
-										<div class="row">
-
-											<button class="btn waves-effect waves-light submit"
-												type="submit" name="action">
-												Submit <i class="material-icons right">send</i>
-											</button>
-
-										</div>
-									</form>
-
-								</div>
-								<div id="test2" class="col s12">
+								<div id="new" class="col s12">
 									<!-- Form -->
 									<form id="newDataForm" method="POST"
 										class="col s12 newDataForm">
@@ -268,8 +207,8 @@
 
 												<div class="col s6">
 													<select class="browser-default" id="status" name="status">
-														<option value="AVAILABLE">Available</option>
-														<option value="UNAVAILABLE">Unavailable</option>
+														<option value="AVAILABLE">AVAILABLE</option>
+														<option value="UPCOMING">UPCOMING</option>
 													</select>
 												</div>
 
@@ -278,78 +217,119 @@
 
 										<div class="row">
 
-											<button class="btn waves-effect waves-light submit"
+											<button class="btn waves-effect waves-light submit green"
 												type="button" name="action">
 												Save <i class="material-icons right">send</i>
 											</button>
 
 										</div>
 
+										<div class="row">
+											<table>
+												<thead>
+													<tr>
+														<th>File Name</th>
+														<th>Last Modified</th>
+														<th>Actions</th>
+													</tr>
+												</thead>
+
+												<tbody>
+													<tr>
+														<td>Screenshot 2.png</td>
+														<td>10/10/2016</td>
+														<td>
+														   <div>
+														   		<a class="waves-effect waves-teal btn-flat">Delete</a>
+														   </div>
+														</td>
+													</tr>
+													<tr>
+														<td>Screenshot 3.png</td>
+														<td>10/10/2016</td>
+														<td>
+														   <div>
+														   		<a class="waves-effect waves-teal btn-flat">Delete</a>
+														   </div>
+														</td>
+													</tr>
+													<tr>
+														<td>Screenshot 4.png</td>
+														<td>10/10/2016</td>
+														<td>
+														   <div>
+														   		<a class="waves-effect waves-teal btn-flat">Delete</a>
+														   </div>
+														</td>
+													</tr>
+												</tbody>
+
+											</table>
+										</div>
+
+									</form>
+								</div>
+
+								<div id="upload" class="col s12">
+									<!-- Form -->
+									<form id="newUploadsForm" method="POST"
+										class="col s12 newUploadsForm">
+										<input type="hidden" name="refId"></input>
+										<div class="row">
+
+											<div class="file-field input-field">
+												<div class="btn col s3">
+													<span>Process Icon</span> <input name="processIcon"
+														type="file">
+												</div>
+												<div class="file-path-wrapper">
+													<input name="processIcon_" class="file-path validate"
+														type="text">
+												</div>
+											</div>
+
+										</div>
+
+										<div class="row">
+
+											<div class="file-field input-field">
+												<div class="btn col s3">
+													<span>Process Zip</span> <input name="file" type="file">
+												</div>
+												<div class="file-path-wrapper">
+													<input name="process_zip" class="file-path validate"
+														type="text">
+												</div>
+											</div>
+
+										</div>
+
+										<div class="row">
+
+											<div class="file-field input-field">
+												<div class="btn col s3">
+													<span>Screenshots</span> <input name="process_images"
+														type="file" multiple>
+												</div>
+												<div class="file-path-wrapper">
+													<input class="file-path validate" type="text">
+												</div>
+											</div>
+
+										</div>
+										<div class="row">
+
+											<button class="btn waves-effect waves-light submit green"
+												type="button" name="action">
+												Upload <i class="material-icons right">attach_file</i>
+											</button>
+
+										</div>
+
 									</form>
 
-									<div id="newUploads" class="col s12">
-										<div class="row">
-											<h4>Upload Files</h4>
-										</div>
-										<!-- Form -->
-										<form id="newUploadsForm" method="POST"
-											class="col s12 newUploadsForm">
-											<input type="hidden" name="refId"></input>
-											<div class="row">
-
-												<div class="file-field input-field">
-													<div class="btn col s3">
-														<span>Process Icon</span> <input name="processIcon"
-															type="file">
-													</div>
-													<div class="file-path-wrapper">
-														<input name="processIcon_" class="file-path validate"
-															type="text">
-													</div>
-												</div>
-
-											</div>
-
-											<div class="row">
-
-												<div class="file-field input-field">
-													<div class="btn col s3">
-														<span>Process Zip</span> <input name="file" type="file">
-													</div>
-													<div class="file-path-wrapper">
-														<input name="process_zip" class="file-path validate"
-															type="text">
-													</div>
-												</div>
-
-											</div>
-
-											<div class="row">
-
-												<div class="file-field input-field">
-													<div class="btn col s3">
-														<span>Screenshots</span> <input name="process_images"
-															type="file" multiple>
-													</div>
-													<div class="file-path-wrapper">
-														<input class="file-path validate" type="text">
-													</div>
-												</div>
-
-											</div>
-											<div class="row">
-
-												<button class="btn waves-effect waves-light submit"
-													type="button" name="action">
-													Upload <i class="material-icons right">send</i>
-												</button>
-
-											</div>
-
-										</form>
-									</div>
-
 								</div>
+
 
 							</div>
 

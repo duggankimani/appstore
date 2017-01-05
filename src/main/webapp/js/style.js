@@ -141,8 +141,14 @@ var loadProcess = function loadProcess() {
 			$(form).find('input[name=\'iconStyle\']').val(iconStyle);
 			$(form).find('input[name=\'backgroundColor\']').val(
 					backgroundColor);
-			$(form).find('input[name=\'description\']').val(description);
-
+			$(form).find('textarea[name=\'description\']').val(description);
+			$(form).find('select[name=\'category\']').val(category);
+			if(status==null){
+				status = 'Available';
+			}
+			$(form).find('select[name=\'status\']').val(status);
+			
+			
 		},
 		fail : function() {
 			alert("failed");
