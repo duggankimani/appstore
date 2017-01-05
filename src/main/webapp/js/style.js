@@ -108,3 +108,49 @@ $(document).ready(function() {
 	// categoryid = IvY5bw5VZzGK75F5
 
 });
+
+
+var loadProcess = function loadProcess() {
+	// Get Catgory
+	var processRef = getUrlParameter('id');
+	// Load All Categories
+	// Check if Category ID is provided					
+	console.log('Loading ProcessRef = ' + processRef);
+	
+	$.ajax({
+		url : 'api/categories/all/processes/' + processRef,
+		async : false,
+		success : function(data) {
+
+			var refId = data['refId'];
+			var isActive = data['isActive'];
+			var id = data['id'];
+			var name = data['name'];
+			var description = data['description'];
+			var iconStyle = data['iconStyle'];
+			var backgroundColor = data['backgroundColor'];
+			var processIcon = data['processIcon'];
+			var category = data['category'];
+			var status = data['status'];
+			var classDeactivate = "";
+			//alert(getUrlParameter("id"));
+
+			var form = $("#newDataForm");
+			$(form).find('input[name=\'refId\']').val(refId);
+			$(form).find('input[name=\'name\']').val(name);
+			$(form).find('input[name=\'iconStyle\']').val(iconStyle);
+			$(form).find('input[name=\'backgroundColor\']').val(
+					backgroundColor);
+			$(form).find('input[name=\'description\']').val(description);
+
+		},
+		fail : function() {
+			alert("failed");
+		},
+		complete : function(data) {
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+		}
+	});
+};
+

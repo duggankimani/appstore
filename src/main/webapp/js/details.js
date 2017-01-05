@@ -33,6 +33,7 @@ $(document)
 								$(".detail_name").html(name);
 								$(".detail_description").html(description);
 								$(".detail_category").html(category);
+								$("#aEditProcess").prop("href","addprocess.html?id="+refId);
 
 
 						},
