@@ -56,7 +56,7 @@ $("#newDataForm").on("submit", function(e) {
 			$(form).find('input[name=\'refId\']').val(data.refId);
 			$('#newUploadsForm').find('input[name=\'refId\']').val(data.refId);
 			Materialize.toast('Process Saved!', 4000);
-			resetForm(form);
+			//resetForm(form);
 		},
 		fail : function(e) {
 			// showPleaseWait(false); alert("Failed"e);
@@ -69,6 +69,7 @@ $("#newDataForm").on("submit", function(e) {
 
 });
 
+
 $(document).ready(function() {
 
 	$(function() {
@@ -79,7 +80,7 @@ $(document).ready(function() {
 	});
 	
 	$('select').material_select();
-
+	
 	/*
 	 * var jsonProcesses = '{"refId":"Z3KVjUt31OVrmcJc", + '"name":"Payment
 	 * Requests",' + '"description":"<p> This proces ...[2000]<p>"}' +
@@ -113,6 +114,10 @@ $(document).ready(function() {
 var loadProcess = function loadProcess() {
 	// Get Catgory
 	var processRef = getUrlParameter('id');
+	if(typeof processRef == "undefined"){
+		return;
+	}
+	
 	// Load All Categories
 	// Check if Category ID is provided					
 	console.log('Loading ProcessRef = ' + processRef);
@@ -133,10 +138,13 @@ var loadProcess = function loadProcess() {
 			var category = data['category'];
 			var status = data['status'];
 			var classDeactivate = "";
+			var attachments = data['attachments'];
 			//alert(getUrlParameter("id"));
 
 			var form = $("#newDataForm");
 			$(form).find('input[name=\'refId\']').val(refId);
+			$("#newUploadsForm").find('input[name=\'refId\']').val(refId);
+			
 			$(form).find('input[name=\'name\']').val(name);
 			$(form).find('input[name=\'iconStyle\']').val(iconStyle);
 			$(form).find('input[name=\'backgroundColor\']').val(
@@ -149,6 +157,22 @@ var loadProcess = function loadProcess() {
 			$(form).find('select[name=\'status\']').val(status);
 			
 			
+			var tableRows= "";
+			for ( var idx in attachments) {
+				var attachment = attachments[idx];
+				
+				tableRows += "<tr>";
+				var attName = attachment['name'];
+				tableRows += "<td>"+attName+"</td>";
+				
+				var attModified = attachment['lastModified'];
+				tableRows += "<td>"+attModified+"</td>";
+				
+				tableRows += "<td><div><a class=\"waves-effect waves-teal btn-flat\">Delete</a></div></td>";
+				tableRows += "</tr>";
+			}
+			
+			$("#attachments").html(tableRows);
 		},
 		fail : function() {
 			alert("failed");

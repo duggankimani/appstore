@@ -1,5 +1,6 @@
 var resetForm = function resetForm(form){
 	$(form).find('input[name=\'refId\']').val('');
+	$("newUploadsForm").find('input[name=\'refId\']').val('');
 	$(form)[0].reset();
 };
 

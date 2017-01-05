@@ -234,7 +234,7 @@
 													</tr>
 												</thead>
 
-												<tbody>
+												<tbody id="attachments">
 													<tr>
 														<td>Screenshot 2.png</td>
 														<td>10/10/2016</td>
@@ -272,14 +272,30 @@
 
 								<div id="upload" class="col s12">
 									<!-- Form -->
-									<form id="newUploadsForm" method="POST"
-										class="col s12 newUploadsForm">
+									<form id="newUploadsForm" method="POST" enctype="multipart/form-data"
+										class="col s12 newUploadsForm" action="api/upload/process">
 										<input type="hidden" name="refId"></input>
+										
 										<div class="row">
 
 											<div class="file-field input-field">
 												<div class="btn col s3">
-													<span>Process Icon</span> <input name="processIcon"
+													<span>Process Zip</span> <input name="process_zip" type="file">
+												</div>
+												<div class="file-path-wrapper">
+													<input name="process_zip_" class="file-path validate"
+														type="text">
+												</div>
+											</div>
+
+										</div>
+										
+										
+										<div class="row">
+
+											<div class="file-field input-field">
+												<div class="btn col s3">
+													<span>Icon</span> <input name="processIcon"
 														type="file">
 												</div>
 												<div class="file-path-wrapper">
@@ -287,23 +303,9 @@
 														type="text">
 												</div>
 											</div>
-
 										</div>
 
-										<div class="row">
-
-											<div class="file-field input-field">
-												<div class="btn col s3">
-													<span>Process Zip</span> <input name="file" type="file">
-												</div>
-												<div class="file-path-wrapper">
-													<input name="process_zip" class="file-path validate"
-														type="text">
-												</div>
-											</div>
-
-										</div>
-
+										
 										<div class="row">
 
 											<div class="file-field input-field">
@@ -409,6 +411,16 @@
 		<script type="text/javascript">
 			$(document).ready(function() {
 				loadProcess();
+				
+				$("#newUploadsForm").on("submit", function(e) {
+					var zipFileName = $(this).find('input[name=\'process_zip_\']').val();
+					var refId = $(this).find('input[name=\'refId\']').val();
+					if(zipFileName=='' && refId==''){
+						e.preventDefault();
+						alert('Cannot upload files without attaching a \'process zip\' or prelecting an existing process!');
+					}
+				});
+
 			});
 		</script>
 </body>
