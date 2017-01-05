@@ -24,15 +24,23 @@ $.fn.serializeObject = function()
 $("#newDataForm").on("submit", function(e) {
 //	var data = $('#newDataForm').serialize();
 	e.preventDefault();
-	var nameField = $(this).find('input[name=\'name\']');
-	if($(nameField).val()==''){
-		alert('Name is mandatory');
-		return;
+	var form = this;
+	var valid = true; 
+	if(!isValid($(this).find('input[name=\'name\']'))){
+		valid = false;
 	}
 	
-	var iconStyle = $(this).find('input[name=\'iconStyle\']');
-	if($(iconStyle).val()==''){
-		$(iconStyle).val('icon-pencil');
+	if(!isValid($(this).find('input[name=\'iconStyle\']'))){
+		valid = false;
+	}
+	
+	if(!isValid($(this).find('input[name=\'backgroundColor\']'))){
+		valid = false;
+	}
+	
+	if(!valid){
+		alert('Please fill in all mandatory fields.');
+		return;
 	}
 	
 	var formData = JSON.stringify($( this ).serializeObject());
@@ -43,10 +51,12 @@ $("#newDataForm").on("submit", function(e) {
 		contentType : 'application/json',
 		type : 'POST',
 		data : formData,
+		dataType : 'json',
 		success : function(data) {
-			//var refId = $(this).find('input[name=\'refId\']');
-			//var d = $.parseJSON(data);
-//			alert(JSON.parse(data));
+			$(form).find('input[name=\'refId\']').val(data.refId);
+			$('#newUploadsForm').find('input[name=\'refId\']').val(data.refId);
+			Materialize.toast('Process Saved!', 4000);
+			resetForm(form);
 		},
 		fail : function(e) {
 			// showPleaseWait(false); alert("Failed"e);

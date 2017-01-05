@@ -88,7 +88,10 @@ public class ProcessResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public ProcessDef save(final ProcessDef processDef) {
-		return ProcessHelper.save(processDef);
+		
+		 ProcessDef def = ProcessHelper.save(processDef);
+		 
+		 return def;
 	}
 
 }

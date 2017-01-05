@@ -1,3 +1,16 @@
+var resetForm = function resetForm(form){
+	$(form).find('input[name=\'refId\']').val('');
+	$(form)[0].reset();
+};
+
+var isValid = function isValid(el){
+	if($(el).val()=='' && $(el).hasClass('validate')){
+		$(el).addClass('invalid');
+		return false;
+	}
+	
+	return true;
+};
 
 var showDetails = function showDetails(id) {
 

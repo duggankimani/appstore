@@ -305,6 +305,10 @@ public class ProcessHelper {
 
 	public static ProcessDef save(final ProcessDef processDef) {
 
+		if(processDef.getRefId()!=null && processDef.getRefId().isEmpty()){
+			processDef.setRefId(null);
+		}
+		
 		ProcessDef saved = null;
 		log.debug("Saving processDef " + processDef);
 		if (processDef.getRefId() != null) {
@@ -358,7 +362,9 @@ public class ProcessHelper {
 			}
 		};
 
-		return processSave.executeDbCall();
+		ProcessDef ret = processSave.executeDbCall();
+		log.info("Created new process {refid:"+ret.getRefId()+", name="+ret.getName()+"}");
+		return ret;
 	}
 
 	private static ProcessDef update(final Integer id, final ProcessDef processDef) {
