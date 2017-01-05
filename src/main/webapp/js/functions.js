@@ -67,7 +67,7 @@ var loadPopularItems = function loadPopularItems(categoryid) {
 				var status = data[items]['status'];
 				var classDeactivate = "";
 
-				if (isActive == "1") {
+				if (status == "AVAILABLE") {
 
 					htmlDataActive += "<a id='" + refId
 							+ "' href='details.html?id="
@@ -89,7 +89,7 @@ var loadPopularItems = function loadPopularItems(categoryid) {
 					// classDeactivate =
 					// "deactivate";
 
-				} else if (isActive == "0") {
+				} else if (status == "UPCOMING") {
 
 
 					htmlDataInActive += "<a id='" + refId
@@ -258,7 +258,7 @@ var loadProcesses = function loadProcesses(categoryid) {
 						var status = data[items]['status'];
 						var classDeactivate = "";
 
-						if (isActive == "1") {
+						if (status == "AVAILABLE") {
 
 							htmlDataActive += "<div  id='" + refId
 									+ "' class='processItem col s12 m3 "
@@ -282,7 +282,7 @@ var loadProcesses = function loadProcesses(categoryid) {
 							// classDeactivate =
 							// "deactivate";
 
-						} else if (isActive == "0") {
+						} else if (status == "UPCOMING") {
 
 							htmlDataInActive += "<div  id='" + refId
 									+ "' class='col s12 m3 " + classDeactivate

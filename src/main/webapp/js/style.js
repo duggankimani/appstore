@@ -146,6 +146,8 @@ var loadProcess = function loadProcess() {
 			$("#newUploadsForm").find('input[name=\'refId\']').val(refId);
 			
 			$(form).find('input[name=\'name\']').val(name);
+			$("#newUploadsForm").find('input[name=\'name\']').val(name);
+			
 			$(form).find('input[name=\'iconStyle\']').val(iconStyle);
 			$(form).find('input[name=\'backgroundColor\']').val(
 					backgroundColor);
