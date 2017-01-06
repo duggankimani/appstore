@@ -154,6 +154,12 @@
 										<input type="hidden" name="refId"></input>
 										<div class="row">
 											<div class="input-field col s6">
+												<a id="back_details" class="waves-effect waves-teal btn-flat">Back</a>
+												<a id="new_process" class="waves-effect waves-teal btn-flat">New</a>
+											</div>
+										</div>
+										<div class="row">
+											<div class="input-field col s6">
 												<input name="name" type="text" class="validate"> <label
 													for="name">Name</label>
 											</div>
@@ -391,13 +397,17 @@
 		<script type="text/javascript">
 			$(document).ready(function() {
 				loadProcess();
+				$("#new_process").click(function(){
+					resetForm($("#newDataForm"));
+					window.location = "addprocess.html";
+				});
 				
 				$("#newUploadsForm").on("submit", function(e) {
 					var zipFileName = $(this).find('input[name=\'process_zip_\']').val();
 					var refId = $(this).find('input[name=\'refId\']').val();
 					if(zipFileName=='' && refId==''){
 						e.preventDefault();
-						alert('Cannot upload files without attaching a \'process zip\' or prelecting an existing process!');
+						alert('Cannot upload files without attaching a \'process zip\' or preselecting an existing process!');
 					}
 				});
 

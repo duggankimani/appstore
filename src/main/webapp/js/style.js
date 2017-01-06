@@ -143,6 +143,13 @@ var loadProcess = function loadProcess() {
 
 			var form = $("#newDataForm");
 			$(form).find('input[name=\'refId\']').val(refId);
+			if(refId!=null){
+				$(form).find('a[id=\'back_details\']').attr("href","details.html?id="+refId);
+			}else{
+				$(form).find('a[id=\'back_details\']').attr("href","details.html");
+			}
+			
+			
 			$("#newUploadsForm").find('input[name=\'refId\']').val(refId);
 			
 			$(form).find('input[name=\'name\']').val(name);
@@ -164,9 +171,9 @@ var loadProcess = function loadProcess() {
 				var attachment = attachments[idx];
 				tableRows += "<tr>";
 				
-				var path = "files/"+refId+"/"+attachment['path'];
+				var path = "api/files/"+refId+"/"+attachment['path'];
 				var attName = attachment['name'];
-				tableRows += "<td><a href=\"api/"+path+"\" target=\"_blank\" class=\"waves-effect waves-teal btn-flat\">"+attName+"</a></div></td>";
+				tableRows += "<td><a href=\""+path+"\" target=\"_blank\" class=\"waves-effect waves-teal btn-flat\">"+attName+"</a></div></td>";
 				
 				var attModified = attachment['lastModified'];
 				tableRows += "<td>"+attModified+"</td>";
@@ -201,9 +208,9 @@ var deleteFile = function deleteFile(filePath){
 	$.ajax({
 		url : filePath,
 		type : 'DELETE',
-		async : false,
+		async : true,
 		success : function(){
-			alert('Success ...');
+			loadProcess();
 		},
 		fail : function() {
 			alert("failed");
