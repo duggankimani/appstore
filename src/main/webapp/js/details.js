@@ -68,8 +68,31 @@ $(document)
 												"href='#slider"+idx+"!'>"+
 												"<img src='"+path+"'></img>"+
 												"</a>";
+										
 									}
 									
+								}
+								
+								if(carouselItems==""){
+									if(backgroundColor!=null){
+										carouselItems="<div class=\"carousel-item white-text\" " +
+												"style='background-color:"+backgroundColor+"'" +
+										"href=\"#one!\"> " +
+										"<h2>No Images</h2> " +
+										"<p class=\"white-text\">" +
+										"No images uploaded for this process.</p></div>";
+							
+									}else{
+										carouselItems="<div class=\"carousel-item green white-text\" " +
+										"href=\"#one!\"> " +
+										"<h2>No Images</h2> " +
+										"<p class=\"white-text\">" +
+										"No images uploaded for this process.</p></div>";
+							
+									}
+									
+									$(".next").addClass("hide");
+									$(".previous").addClass("hide");
 								}
 								
 								$(".carousel").html(carouselItems);
