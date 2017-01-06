@@ -174,7 +174,8 @@ public class GoogleLoginCallbackServlet extends BaseServlet {
 		if(user==null){
 			log.info("Login failure, redirecting to login - "+app_page);
 			//resp.sendRedirect("login.html?failure");
-			resp.getWriter().write("Fail");
+			resp.getWriter().write("Unauthorized account.");
+			resp.setStatus(403);
 			return;
 		}
 		

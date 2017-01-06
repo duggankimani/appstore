@@ -69,6 +69,9 @@ $(document)
 												"<img src='"+path+"'></img>"+
 												"</a>";
 										
+									}else if(path.endsWith(".zip")){
+										$(".download_process").removeClass("hide");
+										$(".download_process").attr("href",path);
 									}
 									
 								}

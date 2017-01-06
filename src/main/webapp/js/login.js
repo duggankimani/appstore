@@ -97,7 +97,7 @@ function signInCallback(code, targetUrl) {
 	if(redirectUrl.includes("?redirect")){
 		var idx = redirectUrl.indexOf("?");
 		redirectUrl = redirectUrl.substring(idx+9+1);
-		alert("redirect = "+redirectUrl);
+//		alert("redirect = "+redirectUrl);
 	}
     // Hide the sign-in button now that the user is authorized, for example:
     $('#Google_Login').attr('style', 'display: none');
@@ -111,6 +111,15 @@ function signInCallback(code, targetUrl) {
         // Handle or verify the server response.
     	  $("body").hide();
     	  window.location=redirectUrl;
+      },
+      fail: function(){
+    	  auth2.signOut();
+    	  auth2.disconnect();
+      },
+      error: function(XMLHttpRequest, textStatus, errorThrown) {
+    	  alert("Login failed: "+errorThrown);
+    	  auth2.signOut();
+    	  auth2.disconnect();
       },
       processData: false,
       data: code

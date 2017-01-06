@@ -49,6 +49,7 @@ var loadPopularItems = function loadPopularItems(categoryid) {
 			$("#favourite_listings").html("");
 
 			var htmlDataActive = "";// "<ul
+			var htmlDataInActive = "";
 			// id='slide-out'
 			// class='side-nav'>";
 			// Header Definition

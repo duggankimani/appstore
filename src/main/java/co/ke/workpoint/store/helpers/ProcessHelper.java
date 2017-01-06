@@ -444,7 +444,7 @@ public class ProcessHelper {
 				setString(5, processDef.getBackgroundColor());
 				setInt(6,
 						processDef.getStatus() == null ? Status.AVAILABLE
-								.ordinal() : Status.UPCOMING.ordinal());
+								.ordinal() : processDef.getStatus().ordinal());
 				setString(7, processDef.getCategory());
 				setInt(8, id);
 			}

@@ -162,7 +162,7 @@ var loadProcess = function loadProcess() {
 			$(form).find('textarea[name=\'description\']').val(description);
 			$(form).find('select[name=\'category\']').val(category);
 			if(status==null){
-				status = 'Available';
+				status = 'AVAILABLE';
 			}
 			$(form).find('select[name=\'status\']').val(status);
 			
