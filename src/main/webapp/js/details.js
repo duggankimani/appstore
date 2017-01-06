@@ -50,7 +50,6 @@ $(document)
 									if(path.includes("/screenshots/")){
 										var attName = attachment['name'];
 										carouselItems += "<a class=\"carousel-item white-text\" " +
-												"style='background-color:red' "+
 												"href='#slider"+idx+"!'>"+
 												"<img src='"+path+"'></img>"+
 												"</a>";
