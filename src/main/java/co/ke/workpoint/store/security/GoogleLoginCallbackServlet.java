@@ -173,7 +173,8 @@ public class GoogleLoginCallbackServlet extends BaseServlet {
 		
 		if(user==null){
 			log.info("Login failure, redirecting to login - "+app_page);
-			resp.sendRedirect("login.html?failure");
+			//resp.sendRedirect("login.html?failure");
+			resp.getWriter().write("Fail");
 			return;
 		}
 		
@@ -186,8 +187,9 @@ public class GoogleLoginCallbackServlet extends BaseServlet {
 			updateUser(user);
 		}
 		
-		log.info("Login success, redirecting to app - "+app_page);
-		resp.sendRedirect(app_page);
+		//log.info("Login success, redirecting to app - "+app_page);
+		//resp.sendRedirect(app_page);
+		resp.getWriter().write("Success");
 	}
 
 	private void updateUser(final User user) {

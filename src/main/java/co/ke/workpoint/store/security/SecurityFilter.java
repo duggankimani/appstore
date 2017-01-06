@@ -1,6 +1,7 @@
 package co.ke.workpoint.store.security;
 
 import java.io.IOException;
+import java.util.Enumeration;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -85,6 +86,20 @@ public class SecurityFilter implements Filter {
 		
 		String redirect = "?redirect="+request.getRequestURI();
 		
+		StringBuffer params = new StringBuffer();
+		Enumeration<String> names = request.getParameterNames();
+		while(names.hasMoreElements()){
+			String name = names.nextElement();
+			if(params.length()==0){
+				params.append("?"+name+"="+request.getParameter(name));
+			}else{
+				params.append("&"+name+"="+request.getParameter(name));
+			}
+			
+		}
+		
+		redirect = redirect + params.toString();
+		logger.debug("Redirect = "+redirect);
 		response.sendRedirect(loginPage+redirect);
 	}
 

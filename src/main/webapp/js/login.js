@@ -93,6 +93,12 @@ function signInCallback(authResult) {
 
 function signInCallback(code, targetUrl) {
   if (code) {
+	var redirectUrl = window.location.href;
+	if(redirectUrl.includes("?redirect")){
+		var idx = redirectUrl.indexOf("?");
+		redirectUrl = redirectUrl.substring(idx+9+1);
+		alert("redirect = "+redirectUrl);
+	}
     // Hide the sign-in button now that the user is authorized, for example:
     $('#Google_Login').attr('style', 'display: none');
 
@@ -104,7 +110,7 @@ function signInCallback(code, targetUrl) {
       success: function(result) {
         // Handle or verify the server response.
     	  $("body").hide();
-    	  window.location='addprocess.html';
+    	  window.location=redirectUrl;
       },
       processData: false,
       data: code
