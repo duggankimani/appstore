@@ -1,12 +1,24 @@
 $('.carousel.carousel-slider').carousel({
 	full_width : true
 });
+
 $(document).ready(function(){
-    $('.carousel').carousel(
+$('.carousel').carousel(
 //    		indicators:true,
 //    		full-width:true
-    );
- });
+);
+});
+
+$( ".next" ).click(function() {
+	$("li.active").next().click();
+});
+
+$( ".previous" ).click(function() {
+	$("li.active").prev().click();
+});
+
+
+$("li.start").next().css({"color": "red", "border": "2px solid red"});
 
 $(document)
 		.ready(
