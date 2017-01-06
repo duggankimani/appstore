@@ -58,9 +58,9 @@ $(document)
 									
 								}
 								
-								$(".carousel-slider").html(carouselItems);
-								$('.carousel').carousel();
-								$('.carousel').carousel('set', 1);
+								$(".carousel").html(carouselItems);
+								$(".carousel").removeClass('initialized');
+								$('.carousel.carousel-slider').carousel({full_width : true});
 
 						},
 						fail : function() {
