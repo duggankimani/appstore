@@ -852,7 +852,18 @@ public class ProcessHelper {
 	}
 
 	public static void deleteFile(String processRefId,
-			HttpServletRequest httpRequest) {
+			HttpServletRequest httpRequest) throws IOException{
+		Path rootPath = getProcessFilesRootPath(processRefId);
+		String requestPath = httpRequest.getRequestURI();
+		requestPath = URLDecoder.decode(requestPath, "UTF-8").replace("/root/", "/./");
+
+		int beginIdx = requestPath.indexOf(processRefId);
+		String path = requestPath.substring(beginIdx+processRefId.length()+1);
+		log.debug("Extracted delete path "+path);
 		
+		Path filePath = rootPath.resolve(path);
+		log.debug("Delete path = '"+filePath.toString()+"'");
+
+		Files.delete(filePath);
 	}
 }

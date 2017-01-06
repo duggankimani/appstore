@@ -126,8 +126,8 @@ public class FilesResource {
 	}
 	
 	@DELETE
-	@Path("/{processRefId}")
-	public void getFile(@PathParam("processRefId") String processRefId,@Context HttpServletRequest httpRequest){
+	@Path("/{processRefId}/{folder}/{file}")
+	public void getFile(@PathParam("processRefId") String processRefId,@Context HttpServletRequest httpRequest) throws IOException{
 		ProcessHelper.deleteFile(processRefId,httpRequest);
 	}
 
