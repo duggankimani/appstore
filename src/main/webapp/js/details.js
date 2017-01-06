@@ -20,7 +20,7 @@ $(document)
 					
 					$.ajax({
 						url : 'api/categories/all/processes/'+categoryid,
-						async : false,
+						async : true,
 						success : function(data) {
 
 								var refId = data['refId'];
@@ -47,6 +47,7 @@ $(document)
 								for ( var idx in attachments) {
 									var attachment = attachments[idx];
 									var path = "api/files/"+refId+"/"+attachment['path'];
+									path = path.replace("\\", "/"); //windows file paths
 									if(path.includes("/screenshots/")){
 										var attName = attachment['name'];
 										carouselItems += "<a class=\"carousel-item white-text\" " +
