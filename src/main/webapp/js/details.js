@@ -94,6 +94,9 @@ $(document)
 							
 									}
 									
+								}
+								
+								if(attachments.length<2){
 									$(".next").addClass("hide");
 									$(".previous").addClass("hide");
 								}
