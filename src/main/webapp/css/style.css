@@ -182,6 +182,26 @@ footer.page-footer {
 	
 }
 
+.previous{
+	
+	left: 71px;
+    opacity: 0.8;
+    position: relative;
+    top: 209px;
+    z-index: 10000;
+	
+}
+
+.next{
+	
+	left: -71px;
+    opacity: 0.8;
+    position: relative;
+    top: 209px;
+    z-index: 10000;
+	
+}
+
 .searchbar{
 
 	margin-bottom: 0px!important;	
