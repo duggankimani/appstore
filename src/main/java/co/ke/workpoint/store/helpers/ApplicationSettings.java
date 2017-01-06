@@ -12,7 +12,7 @@ public class ApplicationSettings {
 	public ApplicationSettings() {
 		try {
 			properties.load(ApplicationSettings.class.getClassLoader()
-					.getResourceAsStream("db.properties"));
+					.getResourceAsStream("app.properties"));
 		}catch(Exception e){
 			log.error("Load Application Settings Failed cause: "+e.getMessage());
 			e.printStackTrace();

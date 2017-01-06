@@ -1,5 +1,8 @@
 package co.ke.workpoint.store.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -43,6 +46,8 @@ public class ProcessDef extends PO{
 	private String processId;
 	private String fileName;
 	private String imageName;
+	
+	private List<Attachment> attachments = new ArrayList<Attachment>();
 	
 	public ProcessDef() {
 	}
@@ -141,5 +146,13 @@ public class ProcessDef extends PO{
 
 	public void setImageName(String imageName) {
 		this.imageName = imageName;
+	}
+
+	public List<Attachment> getAttachments() {
+		return attachments;
+	}
+
+	public void setAttachments(List<Attachment> attachments) {
+		this.attachments = attachments;
 	}
 }

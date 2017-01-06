@@ -1,3 +1,18 @@
+var resetForm = function resetForm(form){
+	$(form).find('input[name=\'refId\']').val('');
+	$("newUploadsForm").find('input[name=\'refId\']').val('');
+	$(form)[0].reset();
+};
+
+var isValid = function isValid(el){
+	if($(el).val()=='' && $(el).hasClass('validate')){
+		$(el).addClass('invalid');
+		return false;
+	}
+	
+	return true;
+};
+
 var showDetails = function showDetails(id) {
 
 	alert(id);
@@ -52,7 +67,7 @@ var loadPopularItems = function loadPopularItems(categoryid) {
 				var status = data[items]['status'];
 				var classDeactivate = "";
 
-				if (isActive == "1") {
+				if (status == "AVAILABLE") {
 
 					htmlDataActive += "<a id='" + refId
 							+ "' href='details.html?id="
@@ -74,7 +89,7 @@ var loadPopularItems = function loadPopularItems(categoryid) {
 					// classDeactivate =
 					// "deactivate";
 
-				} else if (isActive == "0") {
+				} else if (status == "UPCOMING") {
 
 
 					htmlDataInActive += "<a id='" + refId
@@ -141,6 +156,8 @@ var loadCategories = function loadCategories(categoryid) {
 			// id='slide-out'
 			// class='side-nav'>";
 			// Header Definition
+			
+			var options = "";
 
 			for ( var items in data) {
 
@@ -166,12 +183,17 @@ var loadCategories = function loadCategories(categoryid) {
 					// "deactivate";
 
 				}
+				
+				options +="<option value="+name+">"+name+"</option>";
 			}
 
 			// htmlCategory += "</ul>";
 			// alert(htmlCategory);
 			htmlCategory += allUrl;
 			$("#category_listings").html(htmlCategory);
+			if($("#category").length){
+				$("#category").html(options);
+			}
 
 		},
 		fail : function() {
@@ -236,7 +258,7 @@ var loadProcesses = function loadProcesses(categoryid) {
 						var status = data[items]['status'];
 						var classDeactivate = "";
 
-						if (isActive == "1") {
+						if (status == "AVAILABLE") {
 
 							htmlDataActive += "<div  id='" + refId
 									+ "' class='processItem col s12 m3 "
@@ -260,7 +282,7 @@ var loadProcesses = function loadProcesses(categoryid) {
 							// classDeactivate =
 							// "deactivate";
 
-						} else if (isActive == "0") {
+						} else if (status == "UPCOMING") {
 
 							htmlDataInActive += "<div  id='" + refId
 									+ "' class='col s12 m3 " + classDeactivate

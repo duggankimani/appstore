@@ -15,13 +15,7 @@
 <link href="css/style.css" type="text/css" rel="stylesheet"
 	media="screen,projection" />
 
-<script type="text/javascript">
-	function submitAndReload() {
-
-	}
-</script>
 </head>
-
 <body>
 
 	<div class="navbar-fixed">
@@ -136,7 +130,7 @@
 
 		<div class="row">
 
-			<div class="col s12 m11 l11">
+			<div class="col s12 m11 l11 card-panel">
 
 				<div class="section">
 
@@ -147,77 +141,17 @@
 							<div class="row">
 								<div class="col s12">
 									<ul class="tabs">
-
-										<li class="tab col s6"><a class="active" href="#test1">Existing
+										<li class="tab col s6"><a class="active" href="#new">New
 												Process</a></li>
-										<li class="tab col s6"><a href="#test2">New Process</a></li>
-
+										<li class="tab col s6"><a href="#upload">Upload
+												Process</a></li>
 									</ul>
 								</div>
-								<div id="test1" class="col s12">
-
-									<form id="existingDataForm" method="POST"
-										class="col s12 existingDataForm" action="api/upload/process"
-										enctype="multipart/form-data">
-
-										<div class="row">
-
-											<div class="file-field input-field">
-												<div class="btn">
-													<span>Process Zip Upload</span> <input name="process_zip"
-														type="file">
-												</div>
-												<div class="file-path-wrapper">
-													<input name="file" class="file-path validate" type="text">
-												</div>
-											</div>
-
-										</div>
-
-										<div class="row">
-											<div class="input-field col s12">
-												<input id="name" type="text" disabled class="validate">
-												<label for="name">Name</label>
-											</div>
-										</div>
-
-										<div class="row">
-											<div class="input-field col s12">
-												<textarea name="description" class="materialize-textarea"></textarea>
-												<label for="description">Description</label>
-											</div>
-										</div>
-
-										<div class="row">
-
-											<div class="file-field input-field">
-												<div class="btn col s6">
-													<span>Screenshots</span> <input name="process_images"
-														type="file" multiple>
-												</div>
-												<div class="file-path-wrapper">
-													<input class="file-path validate" type="text">
-												</div>
-											</div>
-
-										</div>
-
-										<div class="row">
-
-											<button class="btn waves-effect waves-light submit"
-												type="submit" name="action">
-												Submit <i class="material-icons right">send</i>
-											</button>
-
-										</div>
-									</form>
-
-								</div>
-								<div id="test2" class="col s12">
+								<div id="new" class="col s12">
 									<!-- Form -->
 									<form id="newDataForm" method="POST"
-										class="col s12 newDataForm" action="api/categories/all/process"
-										enctype="multipart/form-data">
+										class="col s12 newDataForm">
+										<input type="hidden" name="refId"></input>
 										<div class="row">
 											<div class="input-field col s6">
 												<input name="name" type="text" class="validate"> <label
@@ -225,26 +159,43 @@
 											</div>
 										</div>
 										<div class="row">
+											<div class="input-field col s6">
+												<input name="iconStyle" name="iconstyle" type="text"
+													class="validate" value="icon-pencil"> <label
+													id="iconstyle">Icon Style</label>
+											</div>
+										</div>
+
+										<div class="row">
+											<div class="input-field col s12">
+												<input id="backgroundcolor" name="backgroundColor"
+													type="text" class="validate" value="#0096b3"> <label
+													for="background Color">Background Color</label>
+											</div>
+
+										</div>
+
+										<div class="row">
 											<div class="input-field col s12">
 												<textarea name="description" class="materialize-textarea"></textarea>
 												<label for="description">Description</label>
 											</div>
 										</div>
+
 										<div class="row">
 											<div class="input-field col s6">
-												<input name="iconstyle" name="iconstyle" type="text"
-													class="validate"> <label id="iconstyle">Icon
-													Style</label>
-											</div>
-										</div>
 
-										<div class="row">
-											<div class="input-field col s12">
-												<input id="backgroundcolor" name="backgroundcolor"
-													type="text" class="validate"> <label
-													for="background Color">Background Color</label>
-											</div>
+												<div class="col s3">
+													<label for="status">Category</label>
+												</div>
 
+												<div class="col s8">
+													<select class="browser-default" id="category"
+														name="category">
+													</select>
+												</div>
+
+											</div>
 										</div>
 
 										<div class="row">
@@ -256,8 +207,8 @@
 
 												<div class="col s6">
 													<select class="browser-default" id="status" name="status">
-														<option value="0">Available</option>
-														<option value="1">Unavailable</option>
+														<option value="AVAILABLE">AVAILABLE</option>
+														<option value="UPCOMING">UPCOMING</option>
 													</select>
 												</div>
 
@@ -266,9 +217,92 @@
 
 										<div class="row">
 
+											<button class="btn waves-effect waves-light submit green"
+												type="button" name="action">
+												Save <i class="material-icons right">send</i>
+											</button>
+
+										</div>
+
+										<div class="row">
+											<table>
+												<thead>
+													<tr>
+														<th>File Name</th>
+														<th>Last Modified</th>
+														<th>Actions</th>
+													</tr>
+												</thead>
+
+												<tbody id="attachments">
+													<tr>
+														<td>Screenshot 2.png</td>
+														<td>10/10/2016</td>
+														<td>
+														   <div>
+														   		<a class="waves-effect waves-teal btn-flat">Delete</a>
+														   </div>
+														</td>
+													</tr>
+													<tr>
+														<td>Screenshot 3.png</td>
+														<td>10/10/2016</td>
+														<td>
+														   <div>
+														   		<a class="waves-effect waves-teal btn-flat">Delete</a>
+														   </div>
+														</td>
+													</tr>
+													<tr>
+														<td>Screenshot 4.png</td>
+														<td>10/10/2016</td>
+														<td>
+														   <div>
+														   		<a class="waves-effect waves-teal btn-flat">Delete</a>
+														   </div>
+														</td>
+													</tr>
+												</tbody>
+
+											</table>
+										</div>
+
+									</form>
+								</div>
+
+								<div id="upload" class="col s12">
+									<!-- Form -->
+									<form id="newUploadsForm" method="POST" enctype="multipart/form-data"
+										class="col s12 newUploadsForm" action="api/upload/process">
+										<input type="hidden" name="refId"></input>
+										
+										<div class="row">
+											<div class="input-field col s6">
+												<input name="name" type="text" class="validate" disabled> <label
+													for="name">Name</label>
+											</div>
+										</div>
+										
+										<div class="row">
+
 											<div class="file-field input-field">
-												<div class="btn">
-													<span>Process Icon</span> <input name="processIcon"
+												<div class="btn col s3">
+													<span>Process Zip</span> <input name="process_zip" type="file">
+												</div>
+												<div class="file-path-wrapper">
+													<input name="process_zip_" class="file-path validate"
+														type="text">
+												</div>
+											</div>
+
+										</div>
+										
+										
+										<div class="row">
+
+											<div class="file-field input-field">
+												<div class="btn col s3">
+													<span>Icon</span> <input name="processIcon"
 														type="file">
 												</div>
 												<div class="file-path-wrapper">
@@ -276,28 +310,13 @@
 														type="text">
 												</div>
 											</div>
-
 										</div>
 
+										
 										<div class="row">
 
 											<div class="file-field input-field">
-												<div class="btn">
-													<span>Process Zip Upload</span> <input name="file"
-														type="file">
-												</div>
-												<div class="file-path-wrapper">
-													<input name="process_zip" class="file-path validate"
-														type="text">
-												</div>
-											</div>
-
-										</div>
-
-										<div class="row">
-
-											<div class="file-field input-field">
-												<div class="btn col s6">
+												<div class="btn col s3">
 													<span>Screenshots</span> <input name="process_images"
 														type="file" multiple>
 												</div>
@@ -307,19 +326,19 @@
 											</div>
 
 										</div>
-
 										<div class="row">
 
-											<button class="btn waves-effect waves-light submit"
+											<button class="btn waves-effect waves-light submit green"
 												type="button" name="action">
-												Submit <i class="material-icons right">send</i>
+												Upload <i class="material-icons right">attach_file</i>
 											</button>
 
 										</div>
 
-
 									</form>
+
 								</div>
+
 
 							</div>
 
@@ -390,12 +409,26 @@
 			</div>
 		</footer>
 
-
 		<!--  Scripts-->
 		<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 		<script src="js/materialize.js"></script>
 		<script src="js/init.js"></script>
 		<script src="js/functions.js"></script>
 		<script src="js/style.js"></script>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				loadProcess();
+				
+				$("#newUploadsForm").on("submit", function(e) {
+					var zipFileName = $(this).find('input[name=\'process_zip_\']').val();
+					var refId = $(this).find('input[name=\'refId\']').val();
+					if(zipFileName=='' && refId==''){
+						e.preventDefault();
+						alert('Cannot upload files without attaching a \'process zip\' or prelecting an existing process!');
+					}
+				});
+
+			});
+		</script>
 </body>
 </html>

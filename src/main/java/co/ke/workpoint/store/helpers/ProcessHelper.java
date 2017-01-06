@@ -3,9 +3,13 @@ package co.ke.workpoint.store.helpers;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URLDecoder;
+import java.nio.file.CopyOption;
+import java.nio.file.DirectoryStream;
 import java.nio.file.FileStore;
 import java.nio.file.FileSystemException;
 import java.nio.file.Files;
+import java.nio.file.LinkOption;
 import java.nio.file.OpenOption;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -17,13 +21,18 @@ import java.nio.file.attribute.PosixFilePermissions;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
@@ -32,6 +41,7 @@ import org.json.JSONObject;
 
 import co.ke.workpoint.store.ProcessResource;
 import co.ke.workpoint.store.dao.DBExecute;
+import co.ke.workpoint.store.model.Attachment;
 import co.ke.workpoint.store.model.Category;
 import co.ke.workpoint.store.model.ProcessDef;
 import co.ke.workpoint.store.model.Status;
@@ -52,44 +62,62 @@ public class ProcessHelper {
 		perms.add(PosixFilePermission.GROUP_EXECUTE);
 		perms.add(PosixFilePermission.OTHERS_READ);
 		perms.add(PosixFilePermission.OTHERS_EXECUTE);
-		FileAttribute<Set<PosixFilePermission>> fileAttributes = PosixFilePermissions.asFileAttribute(perms);
+		FileAttribute<Set<PosixFilePermission>> fileAttributes = PosixFilePermissions
+				.asFileAttribute(perms);
 
 		return fileAttributes;
 	}
 
 	static FileAttribute<?> getPermissions() {
-		
+		try {
+			Path tempFolder = Paths.get(System.getProperty("java.io.tmpdir"));
+			FileStore fs = Files.getFileStore(tempFolder);
+			if (!fs.supportsFileAttributeView(PosixFileAttributeView.class)) {
+				return null;
+			}
+		} catch (Exception e) {
+
+		}
+
 		return getPosixPermissions();
 	}
 
-	public static ProcessDef importProcessAsStream(String name, long size, InputStream is) throws IOException {
-		log.info("Importing process from inputstream {name:" + name + ", size:" + (size / 1024) + "kb}");
+	public static ProcessDef importProcessAsStream(String name, long size,
+			InputStream is) throws IOException {
+		log.info("Importing process from inputstream {name:" + name + ", size:"
+				+ (size / 1024) + "kb}");
 
 		FileAttribute<?> fileAttributes = getPermissions();
 
-		
 		Path zipFilePath = null;
-		
-		Path tempFolder = Paths.get(System.getProperty("java.io.tmpdir"));
-		FileStore fs = Files.getFileStore(tempFolder);
-		if(fs.supportsFileAttributeView(PosixFileAttributeView.class)){
+
+		if (fileAttributes != null) {
 			zipFilePath = Files.createTempFile(name, null, fileAttributes);
-		}else{
+		} else {
 			zipFilePath = Files.createTempFile(name, null);
 		}
-		OpenOption[] options = new OpenOption[] { StandardOpenOption.WRITE, StandardOpenOption.CREATE };
-		OutputStream fos = Files.newOutputStream(zipFilePath, options);
-		final byte[] buffer = new byte[1024];
-		int len;
-		while ((len = is.read(buffer)) > 0) {
-			fos.write(buffer, 0, len);
-		}
-		fos.close();
-		is.close();
 
+		writeFile(is, zipFilePath);
+
+		// Save
 		ProcessDef process = importProcessAsZip(zipFilePath.toString());
 
-		zipFilePath.toFile().delete();
+		// Generate Process Root Path Folders
+		Path rootPath = getProcessFilesRootPath(process.getRefId());
+		if (fileAttributes != null) {
+			Files.createDirectories(rootPath, fileAttributes);
+		} else {
+			Files.createDirectories(rootPath);
+		}
+
+		// Process Zip Path
+		Path processZipPath = rootPath.resolve(name);
+
+		// move
+		if (Files.exists(processZipPath, LinkOption.NOFOLLOW_LINKS)) {
+			Files.delete(processZipPath);
+		}
+		Files.move(zipFilePath, processZipPath);
 
 		return process;
 	}
@@ -103,33 +131,28 @@ public class ProcessHelper {
 
 		// FileAttribute<Set<PosixFilePermission>> fileAttributes =
 		// getPosixPermissions();
-		
-		Path tempFolder = Paths.get(System.getProperty("java.io.tmpdir"));
-		
-		
+
+		FileAttribute<?> fileAttributes = getPermissions();
+
 		ZipFile zipFile = null;
 		Path root = null;
 		try {
-			FileStore fs = Files.getFileStore(tempFolder);
 			zipFile = new ZipFile(zipFileName);
 
-			// root = Files.createDirectories(Paths.get(OUTPUT_FOLDER),
 			// fileAttributes);
-			if(fs.supportsFileAttributeView(PosixFileAttributeView.class)){
-				FileAttribute<?> fileAttributes = getPermissions();
+			if (fileAttributes != null) {
 				root = Files.createTempDirectory(OUTPUT_FOLDER, fileAttributes);
-			}else{
+			} else {
 				root = Files.createTempDirectory(OUTPUT_FOLDER);
 			}
-			
 
-			
 			log.debug("Creating temporary working directory " + root.toString());
 
 			// File folder = path.toFile();
 			// folder.deleteOnExit();
 
-			for (Enumeration<? extends ZipEntry> e = zipFile.entries(); e.hasMoreElements();) {
+			for (Enumeration<? extends ZipEntry> e = zipFile.entries(); e
+					.hasMoreElements();) {
 				ZipEntry zipEntry = e.nextElement();
 
 				String fileName = zipEntry.getName();
@@ -150,45 +173,35 @@ public class ProcessHelper {
 				// create all non exists folders
 				// else you will hit FileNotFoundException for compressed folder
 				if (newFilePath.getParent() != null) {
-					if(fs.supportsFileAttributeView(PosixFileAttributeView.class)){
-						FileAttribute<?> fileAttributes = getPermissions();
-						Files.createDirectories(newFilePath.getParent(), fileAttributes);
-					}else{
+					if (fileAttributes != null) {
+						Files.createDirectories(newFilePath.getParent(),
+								fileAttributes);
+					} else {
 						Files.createDirectories(newFilePath.getParent());
 					}
 				}
 
-				// new File(newFile.getParent()).mkdirs();
-				OpenOption[] options = new OpenOption[] { StandardOpenOption.WRITE, StandardOpenOption.CREATE };
-
-				// try with resources statement will automatically close the
-				// stream
-				OutputStream fos = Files.newOutputStream(newFilePath, options);
-				InputStream is = zipFile.getInputStream(zipEntry);
-				final byte[] buffer = new byte[1024];
-				int len;
-				while ((len = is.read(buffer)) > 0) {
-					fos.write(buffer, 0, len);
-				}
-				fos.close();
-				is.close();
+				writeFile(zipFile.getInputStream(zipEntry), newFilePath);
 			}
 
 			process = importProcess(root);
 		} catch (FileSystemException fse) {
-			log.fatal("importProcessAsZip threw FileSystemException msg: " + fse.getMessage() + ": reason "
-					+ fse.getReason() + ": otherFile " + fse.getOtherFile());
+			log.fatal("importProcessAsZip threw FileSystemException msg: "
+					+ fse.getMessage() + ": reason " + fse.getReason()
+					+ ": otherFile " + fse.getOtherFile());
 			throw new RuntimeException(fse);
 		} catch (IOException ioe) {
-			log.fatal("importProcessAsZip threw IOException: " + ioe.getMessage());
+			log.fatal("importProcessAsZip threw IOException: "
+					+ ioe.getMessage());
 			throw new RuntimeException(ioe);
 		} finally {
 			try {
-				if(zipFile!=null){
+				if (zipFile != null) {
 					zipFile.close();
 				}
 			} catch (IOException e) {
-				log.fatal("importProcessAsZip unable to close ZipInputStream: " + e.getMessage());
+				log.fatal("importProcessAsZip unable to close ZipInputStream: "
+						+ e.getMessage());
 				e.printStackTrace();
 			}
 		}
@@ -197,10 +210,34 @@ public class ProcessHelper {
 			log.debug("Cleaning up working directory " + root.toString());
 			FileUtils.deleteDirectory(root.toFile());
 		} catch (IOException e) {
-			log.warn("Unable to clean working directory " + root.toString() + ", cause: " + e.getMessage());
+			log.warn("Unable to clean working directory " + root.toString()
+					+ ", cause: " + e.getMessage());
 		}
 
 		return process;
+	}
+
+	private static void writeFile(InputStream inputStream, Path newFilePath)
+			throws IOException {
+		OpenOption[] options = new OpenOption[] { StandardOpenOption.WRITE,
+				StandardOpenOption.CREATE };
+
+		// File Exists
+		if (Files.exists(newFilePath, LinkOption.NOFOLLOW_LINKS)) {
+			Files.delete(newFilePath);
+		}
+
+		log.debug("Writing file " + newFilePath);
+		// try with resources statement will automatically close the
+		// stream
+		OutputStream fos = Files.newOutputStream(newFilePath, options);
+		final byte[] buffer = new byte[1024];
+		int len;
+		while ((len = inputStream.read(buffer)) > 0) {
+			fos.write(buffer, 0, len);
+		}
+		fos.close();
+		inputStream.close();
 	}
 
 	/**
@@ -218,17 +255,23 @@ public class ProcessHelper {
 			String processJsonStr = new String(processBytes);
 			JSONObject processJson = new JSONObject(processJsonStr);
 
-			log.info("Importing process ID: " + processJson.getString(ProcessDef.ID) + ", Name:"
+			log.info("Importing process ID: "
+					+ processJson.getString(ProcessDef.ID) + ", Name:"
 					+ processJson.getString(ProcessDef.NAME));
 			processDef = new ProcessDef();
 			processDef.setRefId(processJson.getString(ProcessDef.ID));
 			processDef.setName(processJson.getString(ProcessDef.NAME));
-			processDef.setProcessId(processJson.optString(ProcessDef.PROCESSID));
-			processDef.setBackgroundColor(processJson.optString(ProcessDef.BACKGROUNDCOLOR));
-			processDef.setIconStyle(processJson.optString(ProcessDef.ICONSTYLE));
+			processDef
+					.setProcessId(processJson.optString(ProcessDef.PROCESSID));
+			processDef.setBackgroundColor(processJson
+					.optString(ProcessDef.BACKGROUNDCOLOR));
+			processDef
+					.setIconStyle(processJson.optString(ProcessDef.ICONSTYLE));
 			processDef.setFileName(processJson.optString(ProcessDef.FILENAME));
-			processDef.setDescription(processJson.optString(ProcessDef.DESCRIPTION));
-			processDef.setImageName(processJson.optString(ProcessDef.IMAGENAME));
+			processDef.setDescription(processJson
+					.optString(ProcessDef.DESCRIPTION));
+			processDef
+					.setImageName(processJson.optString(ProcessDef.IMAGENAME));
 
 			String category = processJson.optString(ProcessDef.CATEGORY);
 			Category cat = getCategoryByName(category);
@@ -305,6 +348,10 @@ public class ProcessHelper {
 
 	public static ProcessDef save(final ProcessDef processDef) {
 
+		if (processDef.getRefId() != null && processDef.getRefId().isEmpty()) {
+			processDef.setRefId(null);
+		}
+
 		ProcessDef saved = null;
 		log.debug("Saving processDef " + processDef);
 		if (processDef.getRefId() != null) {
@@ -338,7 +385,8 @@ public class ProcessHelper {
 			}
 
 			@Override
-			protected ProcessDef processResults(PreparedStatement pStmt, boolean hasResults) throws SQLException {
+			protected ProcessDef processResults(PreparedStatement pStmt,
+					boolean hasResults) throws SQLException {
 				return processDef;
 			}
 
@@ -352,26 +400,34 @@ public class ProcessHelper {
 				setString(3, processDef.getDescription());
 				setString(4, processDef.getIconStyle());
 				setString(5, processDef.getBackgroundColor());
-				setInt(6, processDef.getStatus() == null ? Status.AVAILABLE.ordinal() : Status.UPCOMING.ordinal());
+				setInt(6,
+						processDef.getStatus() == null ? Status.AVAILABLE
+								.ordinal() : Status.UPCOMING.ordinal());
 				setString(7, processDef.getCategory());
 
 			}
 		};
 
-		return processSave.executeDbCall();
+		ProcessDef ret = processSave.executeDbCall();
+		log.info("Created new process {refid:" + ret.getRefId() + ", name="
+				+ ret.getName() + "}");
+		return ret;
 	}
 
-	private static ProcessDef update(final Integer id, final ProcessDef processDef) {
+	private static ProcessDef update(final Integer id,
+			final ProcessDef processDef) {
 		DBExecute<ProcessDef> processSave = new DBExecute<ProcessDef>() {
 			@Override
 			protected String getQueryString() {
 
 				return "update processdef set refid=?, name=?, description=?,"
-						+ "iconstyle=?,backgroundcolor=?,status=?," + "category=? where id=?";
+						+ "iconstyle=?,backgroundcolor=?,status=?,"
+						+ "category=? where id=?";
 			}
 
 			@Override
-			protected ProcessDef processResults(PreparedStatement pStmt, boolean hasResults) throws SQLException {
+			protected ProcessDef processResults(PreparedStatement pStmt,
+					boolean hasResults) throws SQLException {
 				processDef.setId(id);
 				return processDef;
 			}
@@ -386,7 +442,9 @@ public class ProcessHelper {
 				setString(3, processDef.getDescription());
 				setString(4, processDef.getIconStyle());
 				setString(5, processDef.getBackgroundColor());
-				setInt(6, processDef.getStatus() == null ? Status.AVAILABLE.ordinal() : Status.UPCOMING.ordinal());
+				setInt(6,
+						processDef.getStatus() == null ? Status.AVAILABLE
+								.ordinal() : Status.UPCOMING.ordinal());
 				setString(7, processDef.getCategory());
 				setInt(8, id);
 			}
@@ -405,7 +463,8 @@ public class ProcessHelper {
 			}
 
 			@Override
-			protected Integer processResults(PreparedStatement pStmt, boolean hasResults) throws SQLException {
+			protected Integer processResults(PreparedStatement pStmt,
+					boolean hasResults) throws SQLException {
 				ResultSet rs = getResultSet();
 				Integer id = null;
 				if (rs.next()) {
@@ -433,13 +492,15 @@ public class ProcessHelper {
 			}
 
 			@Override
-			protected Category processResults(PreparedStatement pStmt, boolean hasResults) throws SQLException {
+			protected Category processResults(PreparedStatement pStmt,
+					boolean hasResults) throws SQLException {
 				return cat;
 			}
 
 			@Override
 			protected void setParameters() throws SQLException {
-				setString(1, cat.getRefId() == null ? IDUtils.generateId() : cat.getRefId());
+				setString(1, cat.getRefId() == null ? IDUtils.generateId()
+						: cat.getRefId());
 				setString(2, cat.getName());
 			}
 		};
@@ -456,7 +517,8 @@ public class ProcessHelper {
 			}
 
 			@Override
-			protected Category processResults(PreparedStatement pStmt, boolean hasResults) throws SQLException {
+			protected Category processResults(PreparedStatement pStmt,
+					boolean hasResults) throws SQLException {
 
 				ResultSet rs = getResultSet();
 				Category cat = null;
@@ -477,8 +539,7 @@ public class ProcessHelper {
 
 		return exec.executeDbCall();
 	}
-	
-	
+
 	public static List<Category> getCategories() {
 
 		DBExecute<List<Category>> exec = new DBExecute<List<Category>>() {
@@ -488,10 +549,11 @@ public class ProcessHelper {
 			}
 
 			@Override
-			protected List<Category> processResults(PreparedStatement pStmt, boolean hasResults) throws SQLException {
+			protected List<Category> processResults(PreparedStatement pStmt,
+					boolean hasResults) throws SQLException {
 
 				ResultSet rs = getResultSet();
-				
+
 				List<Category> categories = new ArrayList<Category>();
 				while (rs.next()) {
 					Category cat = new Category();
@@ -500,7 +562,7 @@ public class ProcessHelper {
 					cat.setName(rs.getString(3));
 					categories.add(cat);
 				}
-				
+
 				return categories;
 			}
 
@@ -514,48 +576,51 @@ public class ProcessHelper {
 
 	public static Category getCategoryByRefId(final String refId) {
 
-			DBExecute<Category> exec = new DBExecute<Category>() {
-				@Override
-				protected String getQueryString() {
-					return "select id, refid, name from category where refId=?";
+		DBExecute<Category> exec = new DBExecute<Category>() {
+			@Override
+			protected String getQueryString() {
+				return "select id, refid, name from category where refId=?";
+			}
+
+			@Override
+			protected Category processResults(PreparedStatement pStmt,
+					boolean hasResults) throws SQLException {
+
+				ResultSet rs = getResultSet();
+				Category cat = null;
+				if (rs.next()) {
+					cat = new Category();
+					cat.setId(rs.getInt(1));
+					cat.setRefId(rs.getString(2));
+					cat.setName(rs.getString(3));
 				}
+				return cat;
+			}
 
-				@Override
-				protected Category processResults(PreparedStatement pStmt, boolean hasResults) throws SQLException {
+			@Override
+			protected void setParameters() throws SQLException {
+				setString(1, refId);
+			}
+		};
 
-					ResultSet rs = getResultSet();
-					Category cat = null;
-					if (rs.next()) {
-						cat = new Category();
-						cat.setId(rs.getInt(1));
-						cat.setRefId(rs.getString(2));
-						cat.setName(rs.getString(3));
-					}
-					return cat;
-				}
+		return exec.executeDbCall();
+	}
 
-				@Override
-				protected void setParameters() throws SQLException {
-					setString(1, refId);
-				}
-			};
-
-			return exec.executeDbCall();
-		}
-
-	public static List<ProcessDef> getProcessesByCategoryId(final String categoryRefId) {
+	public static List<ProcessDef> getProcessesByCategoryId(
+			final String categoryRefId) {
 		DBExecute<List<ProcessDef>> exec = new DBExecute<List<ProcessDef>>() {
 			@Override
 			protected String getQueryString() {
-				if(categoryRefId==null || categoryRefId.equals(ProcessResource.ALL)){
+				if (categoryRefId == null
+						|| categoryRefId.equals(ProcessResource.ALL)) {
 					return "select id, refid, name, description, iconstyle, "
 							+ "backgroundcolor, processicon, status, category from processdef";
-				}else{
+				} else {
 					return "select p.id, p.refid, p.name, p.description, p.iconstyle, "
 							+ "p.backgroundcolor, p.processicon, p.status, p.category "
 							+ "from processdef p where p.category=(select name from category where refid=?)";
 				}
-				
+
 			}
 
 			@Override
@@ -583,7 +648,8 @@ public class ProcessHelper {
 
 			@Override
 			protected void setParameters() throws SQLException {
-				if(categoryRefId!=null && !categoryRefId.equals(ProcessResource.ALL)){
+				if (categoryRefId != null
+						&& !categoryRefId.equals(ProcessResource.ALL)) {
 					setString(1, categoryRefId);
 				}
 			}
@@ -592,19 +658,21 @@ public class ProcessHelper {
 		return exec.executeDbCall();
 	}
 
-	public static List<ProcessDef> getFavoriteProcessesByCategoryId(final String categoryRefId) {
+	public static List<ProcessDef> getFavoriteProcessesByCategoryId(
+			final String categoryRefId) {
 		DBExecute<List<ProcessDef>> exec = new DBExecute<List<ProcessDef>>() {
 			@Override
 			protected String getQueryString() {
-				if(categoryRefId==null || categoryRefId.equals(ProcessResource.ALL)){
+				if (categoryRefId == null
+						|| categoryRefId.equals(ProcessResource.ALL)) {
 					return "select id, refid, name, description, iconstyle, "
 							+ "backgroundcolor, processicon, status, category from processdef limit 5";
-				}else{
+				} else {
 					return "select p.id, p.refid, p.name, p.description, p.iconstyle, "
 							+ "p.backgroundcolor, p.processicon, p.status, p.category "
 							+ "from processdef p where p.category=(select name from category where refid=? limit 5)";
 				}
-				
+
 			}
 
 			@Override
@@ -632,7 +700,8 @@ public class ProcessHelper {
 
 			@Override
 			protected void setParameters() throws SQLException {
-				if(categoryRefId!=null && !categoryRefId.equals(ProcessResource.ALL)){
+				if (categoryRefId != null
+						&& !categoryRefId.equals(ProcessResource.ALL)) {
 					setString(1, categoryRefId);
 				}
 			}
@@ -641,5 +710,149 @@ public class ProcessHelper {
 		return exec.executeDbCall();
 	}
 
+	public static void saveFile(String processRefId, InputStream inputStream,
+			String fileName) {
+		log.debug("Writing files for processRefId '" + processRefId + "'");
+		Path rootPath = getProcessFilesRootPath(processRefId);
+		FileAttribute<?> attributes = getPermissions();
 
+		try {
+
+			if (attributes != null) {
+				rootPath = Files.createDirectories(rootPath, attributes);
+			} else {
+				rootPath = Files.createDirectories(rootPath);
+			}
+
+			log.debug("Resolve path - rootPath = " + rootPath + ", FileName = "
+					+ fileName);
+			Path filePath = rootPath.resolve(fileName);
+			log.debug("File path - " + filePath.toString());
+			if (attributes != null) {
+				Files.createDirectories(filePath.getParent(), attributes);
+			} else {
+				Files.createDirectories(filePath.getParent());
+			}
+
+			writeFile(inputStream, filePath);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+
+	}
+
+	private static Path getProcessFilesRootPath(String processRefId) {
+		// Root file
+		String dir = ApplicationSettings.getInstance().getProperty(
+				"app.files.dir");
+		Path rootPath = Paths.get(dir, processRefId);
+
+		return rootPath;
+	}
+
+	public static ProcessDef getProcessByRefId(final String processRefId) {
+		DBExecute<ProcessDef> exec = new DBExecute<ProcessDef>() {
+			@Override
+			protected String getQueryString() {
+
+				return "select id, refid, name, description, iconstyle, "
+						+ "backgroundcolor, processicon, status, category from processdef where refid=?";
+			}
+
+			@Override
+			protected ProcessDef processResults(PreparedStatement pStmt,
+					boolean hasResults) throws SQLException {
+				ResultSet rs = getResultSet();
+
+				ProcessDef def = null;
+				if (rs.next()) {
+					def = new ProcessDef();
+					def.setId(rs.getInt(1));
+					def.setRefId(rs.getString(2));
+					def.setName(rs.getString(3));
+					def.setDescription(rs.getString(4));
+					def.setIconStyle(rs.getString(5));
+					def.setBackgroundColor(rs.getString(6));
+					def.setProcessIcon(rs.getString(7));
+					Status status = Status.values()[rs.getInt(8)];
+					def.setStatus(status);
+					def.setCategory(rs.getString(9));
+				}
+				return def;
+			}
+
+			@Override
+			protected void setParameters() throws SQLException {
+				setString(1, processRefId);
+			}
+		};
+
+		return exec.executeDbCall();
+
+	}
+
+	public static List<Attachment> getAttachments(String processRefId) {
+		List<Attachment> files = new ArrayList<Attachment>();
+		Path rootPath = getProcessFilesRootPath(processRefId);
+
+		if (!Files.exists(rootPath)) {
+			return files;
+		}
+
+		loadFiles(processRefId, rootPath, files);
+
+		return files;
+	}
+
+	private static void loadFiles(String processRefId, Path basePath,
+			List<Attachment> files) {
+		Path rootPath = getProcessFilesRootPath(processRefId);
+		try (DirectoryStream<Path> stream = Files.newDirectoryStream(basePath)) {
+			for (Path path : stream) {
+				if (Files.isDirectory(path)) {
+					loadFiles(processRefId, path, files);
+				} else {
+					Attachment a = new Attachment();
+					a.setName(path.getFileName().toString());
+					if (!Files.isSameFile(rootPath, basePath)) {
+						a.setPath(rootPath.relativize(path).toString());
+					}else{
+						a.setPath("root/"+rootPath.relativize(path).toString());
+					}
+					Date lastModified = new Date(Files
+							.getLastModifiedTime(path).toMillis());
+					
+					SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+					a.setLastModified(format.format(lastModified));
+					files.add(a);
+				}
+
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void loadFile(String processRefId,
+			HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws IOException {
+		Path rootPath = getProcessFilesRootPath(processRefId);
+		String requestPath = httpRequest.getRequestURI();
+		requestPath = URLDecoder.decode(requestPath, "UTF-8").replace("/root/", "/./");
+
+		int beginIdx = requestPath.indexOf(processRefId);
+		String path = requestPath.substring(beginIdx+processRefId.length()+1);
+		log.debug("Extracted path "+path);
+		
+		Path filePath = rootPath.resolve(path);
+		log.debug("Final file path = '"+filePath.toString()+"'");
+		
+		OutputStream os = httpResponse.getOutputStream();
+		Files.copy(filePath, os);
+		os.close();
+	}
+
+	public static void deleteFile(String processRefId,
+			HttpServletRequest httpRequest) {
+		
+	}
 }
