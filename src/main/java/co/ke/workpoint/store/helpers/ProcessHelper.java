@@ -3,6 +3,7 @@ package co.ke.workpoint.store.helpers;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URLDecoder;
 import java.nio.file.CopyOption;
 import java.nio.file.DirectoryStream;
 import java.nio.file.FileStore;
@@ -29,6 +30,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
@@ -812,6 +816,8 @@ public class ProcessHelper {
 					a.setName(path.getFileName().toString());
 					if (!Files.isSameFile(rootPath, basePath)) {
 						a.setPath(rootPath.relativize(path).toString());
+					}else{
+						a.setPath("root/"+rootPath.relativize(path).toString());
 					}
 					Date lastModified = new Date(Files
 							.getLastModifiedTime(path).toMillis());
@@ -825,5 +831,28 @@ public class ProcessHelper {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public static void loadFile(String processRefId,
+			HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws IOException {
+		Path rootPath = getProcessFilesRootPath(processRefId);
+		String requestPath = httpRequest.getRequestURI();
+		requestPath = URLDecoder.decode(requestPath, "UTF-8").replace("/root/", "/./");
+
+		int beginIdx = requestPath.indexOf(processRefId);
+		String path = requestPath.substring(beginIdx+processRefId.length()+1);
+		log.debug("Extracted path "+path);
+		
+		Path filePath = rootPath.resolve(path);
+		log.debug("Final file path = '"+filePath.toString()+"'");
+		
+		OutputStream os = httpResponse.getOutputStream();
+		Files.copy(filePath, os);
+		os.close();
+	}
+
+	public static void deleteFile(String processRefId,
+			HttpServletRequest httpRequest) {
+		
 	}
 }

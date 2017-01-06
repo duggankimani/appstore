@@ -162,19 +162,27 @@ var loadProcess = function loadProcess() {
 			var tableRows= "";
 			for ( var idx in attachments) {
 				var attachment = attachments[idx];
-				
 				tableRows += "<tr>";
+				
+				var path = "files/"+refId+"/"+attachment['path'];
 				var attName = attachment['name'];
-				tableRows += "<td>"+attName+"</td>";
+				tableRows += "<td><a href=\"api/"+path+"\" target=\"_blank\" class=\"waves-effect waves-teal btn-flat\">"+attName+"</a></div></td>";
 				
 				var attModified = attachment['lastModified'];
 				tableRows += "<td>"+attModified+"</td>";
 				
-				tableRows += "<td><div><a class=\"waves-effect waves-teal btn-flat\">Delete</a></div></td>";
+				tableRows += "<td><div><a href=\""+path+"\" class=\"waves-effect waves-teal btn-flat delete\">Delete</a></div></td>";
 				tableRows += "</tr>";
 			}
 			
 			$("#attachments").html(tableRows);
+			
+			$("#attachments").find("a.delete").click(function(e){
+				var href = $(this).attr('href');
+				console.log('delete '+href);
+				deleteFile(href);
+				e.preventDefault();
+			});
 		},
 		fail : function() {
 			alert("failed");
@@ -186,3 +194,22 @@ var loadProcess = function loadProcess() {
 	});
 };
 
+
+var deleteFile = function deleteFile(filePath){
+	alert("Delete - File Path - "+filePath);
+	
+	$.ajax({
+		url : filePath,
+		type : 'DELETE',
+		async : false,
+		success : function(){
+			alert('Success ...');
+		},
+		fail : function() {
+			alert("failed");
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+			alert('Error '+errorThrown);
+		}
+	});
+} 
