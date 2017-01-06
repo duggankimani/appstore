@@ -10,8 +10,10 @@ $(document).ready(function(){
 
 $(document)
 		.ready(
+				
 				function() {
-
+					loadPopularItems();
+					
 					// Get Catgory
 					var categoryid = getUrlParameter('id');
 					// Load All Categories
