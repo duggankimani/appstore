@@ -177,7 +177,7 @@ footer.page-footer {
 .processItem:hover{
 
 	cursor:pointer;
-	border:2px solid #eeeeee;
+	/*border:2px solid #eeeeee;*/
 	opacity:0.8;
 	
 }
