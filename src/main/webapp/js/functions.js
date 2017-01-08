@@ -212,18 +212,28 @@ var loadCategories = function loadCategories(categoryid) {
 };
 
 var loadProcesses = function loadProcesses(categoryid) {
+	loadProcesses(categoryid, $("search").val());
+}
+
+var loadProcesses = function loadProcesses(categoryid, searchPhrase) {
 
 	var url = "";
 	var allUrl = "";
+	
+	if(searchPhrase==null || searchPhrase.trim()==''){
+		searchPhrase='';
+	}else{
+		searchPhrase='?q='+searchPhrase;
+	}
 
 	if (categoryid == "" || categoryid == "undefined"
 			|| categoryid == undefined) {
 
-		url = "api/categories/all/processes";
+		url = "api/categories/all/processes"+searchPhrase;
 
 	} else {
 
-		url = "api/categories/" + categoryid + "/processes";
+		url = "api/categories/" + categoryid + "/processes"+searchPhrase;
 		allUrl = "<li><a href='index.html'>All</a></li>";
 		;
 

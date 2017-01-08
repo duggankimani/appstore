@@ -8,6 +8,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import org.apache.log4j.Logger;
@@ -27,9 +28,9 @@ public class ProcessResource {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<ProcessDef> getAll() {
+	public List<ProcessDef> getAll(@QueryParam("q") String searchPhrase) {
 
-		return ProcessHelper.getProcessesByCategoryId(categoryRefId);
+		return ProcessHelper.getProcessesByCategoryId(categoryRefId, searchPhrase);
 	}
 
 	@GET

@@ -21,6 +21,12 @@ $.fn.serializeObject = function()
     return o;
 };
 
+$("#search").on("change", function(e){
+	var categoryid = getUrlParameter('categoryid');
+	var search = $(this).val();
+	loadProcesses(categoryid,search);
+});
+
 $("#newDataForm").on("submit", function(e) {
 //	var data = $('#newDataForm').serialize();
 	e.preventDefault();

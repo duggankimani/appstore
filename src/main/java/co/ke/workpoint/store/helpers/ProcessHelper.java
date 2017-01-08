@@ -607,18 +607,21 @@ public class ProcessHelper {
 	}
 
 	public static List<ProcessDef> getProcessesByCategoryId(
-			final String categoryRefId) {
+			final String categoryRefId, final String searchPhrase) {
 		DBExecute<List<ProcessDef>> exec = new DBExecute<List<ProcessDef>>() {
 			@Override
 			protected String getQueryString() {
+				
 				if (categoryRefId == null
 						|| categoryRefId.equals(ProcessResource.ALL)) {
 					return "select id, refid, name, description, iconstyle, "
-							+ "backgroundcolor, processicon, status, category from processdef";
+							+ "backgroundcolor, processicon, status, category from processdef "
+							+(searchPhrase==null? "" : "where lower(name) like ?");
 				} else {
 					return "select p.id, p.refid, p.name, p.description, p.iconstyle, "
 							+ "p.backgroundcolor, p.processicon, p.status, p.category "
-							+ "from processdef p where p.category=(select name from category where refid=?)";
+							+ "from processdef p where p.category=(select name from category where refid=?) "
+							+ (searchPhrase==null? "" : "and lower(name) like ?");
 				}
 
 			}
@@ -648,9 +651,14 @@ public class ProcessHelper {
 
 			@Override
 			protected void setParameters() throws SQLException {
+				int i=1;
 				if (categoryRefId != null
 						&& !categoryRefId.equals(ProcessResource.ALL)) {
-					setString(1, categoryRefId);
+					setString(i++, categoryRefId);
+				}
+				
+				if(searchPhrase!=null){
+					setString(i++, "%"+searchPhrase.toLowerCase()+"%");
 				}
 			}
 		};
