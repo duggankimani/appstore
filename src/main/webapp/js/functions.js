@@ -238,13 +238,12 @@ var loadProcesses = function loadProcesses(categoryid) {
 					$("#available_processes").html("");
 
 					var htmlDataActive = "";
-
 					// Header Definition
-					htmlDataActive = "<div class='col s12 m10'><h5>Available Processes</h5><p><span>"
-							+ data.length + "</span> Processes</p></div>";
-
-					// Header Definition
-					htmlDataInActive = "<div class='col s12 m10'><h5>Upcoming Processes</h5><p><span>0</span> Processes</p></div>";
+					var htmlDataInActive = "";
+					
+					var selCategory = "";
+					
+					var inactive = 0;
 
 					for ( var items in data) {
 
@@ -257,6 +256,9 @@ var loadProcesses = function loadProcesses(categoryid) {
 						var backgroundColor = data[items]['backgroundColor'];
 						var processIcon = data[items]['processIcon'];
 						var category = data[items]['category'];
+						if(categoryid!=null && categoryid!=''){
+							selCategory = category;
+						}
 						var status = data[items]['status'];
 						var classDeactivate = "";
 
@@ -285,7 +287,7 @@ var loadProcesses = function loadProcesses(categoryid) {
 							// "deactivate";
 
 						} else if (status == "UPCOMING") {
-
+							++inactive;
 							htmlDataInActive += "<div  id='" + refId
 									+ "' class='col s12 m3 " + classDeactivate
 									+ "'>";
@@ -307,11 +309,31 @@ var loadProcesses = function loadProcesses(categoryid) {
 
 						}
 					}
+					
+					if(selCategory==''){
+						activeHeading = "<div class='col s12 m10'><h5>Available Processes</h5><p><span>"
+							+ data.length + "</span> Processes</p></div>";
+					}else{
+						activeHeading = "<div class='col s12 m10'><h5>"+category+" Processes</h5><p><span>"
+							+ data.length + "</span> Processes</p></div>";
+					}
+					
+					if(inactive==0){
+						inactiveHeading = "<div class='col s12 m10 hide'><h5>Upcoming Processes</h5><p><span>" +
+						"" +inactive+
+						"</span> Processes</p></div>";
+					}else{
+						inactiveHeading = "<div class='col s12 m10'><h5>Upcoming Processes</h5><p><span>" +
+						"" +inactive+
+						"</span> Processes</p></div>";
+					}
+					
+				
 
 					$("#available_processes").html("");
 					$("#upcoming_processes").html("");
-					$("#available_processes").html(htmlDataActive);
-					$("#upcoming_processes").html(htmlDataInActive);
+					$("#available_processes").html(activeHeading+htmlDataActive);
+					$("#upcoming_processes").html(inactiveHeading+htmlDataInActive);
 
 				},
 				fail : function() {
