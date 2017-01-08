@@ -154,11 +154,11 @@
 										<input type="hidden" name="refId"></input>
 										<div class="row">
 											<div class="input-field col s6">
-												<a id="back_details" class="waves-effect waves-teal btn-flat">
-												Back
-												<i class="material-icons left">arrow_back</i>
-												</a>
-												<a id="new_process" class="waves-effect waves-teal btn-flat">New</a>
+												<a id="back_details"
+													class="waves-effect waves-teal btn-flat"> Back <i
+													class="material-icons left">arrow_back</i>
+												</a> <a id="new_process"
+													class="waves-effect waves-teal btn-flat">New</a>
 											</div>
 										</div>
 										<div class="row">
@@ -254,22 +254,24 @@
 
 								<div id="upload" class="col s12">
 									<!-- Form -->
-									<form id="newUploadsForm" method="POST" enctype="multipart/form-data"
-										class="col s12 newUploadsForm" action="api/files">
+									<form id="newUploadsForm" method="POST"
+										enctype="multipart/form-data" class="col s12 newUploadsForm"
+										action="api/files">
 										<input type="hidden" name="refId"></input>
-										
+
 										<div class="row">
 											<div class="input-field col s6">
-												<input name="name" type="text" class="validate" disabled> <label
-													for="name">Name</label>
+												<input name="name" type="text" class="validate" disabled>
+												<label for="name">Name</label>
 											</div>
 										</div>
-										
+
 										<div class="row">
 
 											<div class="file-field input-field">
 												<div class="btn col s3">
-													<span>Process Zip</span> <input name="process_zip" type="file">
+													<span>Process Zip</span> <input name="process_zip"
+														type="file">
 												</div>
 												<div class="file-path-wrapper">
 													<input name="process_zip_" class="file-path validate"
@@ -278,14 +280,13 @@
 											</div>
 
 										</div>
-										
-										
+
+
 										<div class="row">
 
 											<div class="file-field input-field">
 												<div class="btn col s3">
-													<span>Icon</span> <input name="processIcon"
-														type="file">
+													<span>Icon</span> <input name="processIcon" type="file">
 												</div>
 												<div class="file-path-wrapper">
 													<input name="processIcon_" class="file-path validate"
@@ -294,7 +295,7 @@
 											</div>
 										</div>
 
-										
+
 										<div class="row">
 
 											<div class="file-field input-field">
@@ -348,46 +349,45 @@
 
 		</div>
 
-
-
-
-		<footer class="page-footer orange">
-			<div class="container">
-				<div class="row">
-					<div class="col l6 s12">
-						<h5 class="white-text">About Wira</h5>
-						<p class="grey-text text-lighten-4">WIRA is a business centric workflow and BPM solution developed by Workpoint Limited.
-						Welcome to the age of user friendly, easy to deploy, template driven workflows.</p>
-
-
-					</div>
-					<div class="col l3 s12">
-						<h5 class="white-text">Resources</h5>
-						<ul>
-							<li><a class="white-text" href="#!">Demo</a></li>
-							<li><a class="white-text" href="#!">Blog</a></li>
-							<li><a class="white-text" href="#!">Website</a></li>
-							<li><a class="white-text" href="#!">Link 4</a></li>
-						</ul>
-					</div>
-					<div class="col l3 s12">
-						<h5 class="white-text">Connect</h5>
-						<ul>
-							<li><a class="white-text" href="#!">Contacts</a></li>
-							<li><a class="white-text" href="#!">Facebook</a></li>
-							<li><a class="white-text" href="#!">Twitter</a></li>
-							<li><a class="white-text" href="#!">LinkedIn</a></li>
-						</ul>
-					</div>
-				</div>
-			</div>
-			<div class="footer-copyright">
+					<footer class="page-footer orange">
 				<div class="container">
-					Made by <a class="orange-text text-lighten-3"
-						href="http://www.workpoint.co.ke">Workpoint Limited</a>
+					<div class="row">
+						<div class="col l6 s12">
+							<h5 class="white-text">About Wira</h5>
+							<p class="grey-text text-lighten-4">WIRA is business centric
+								workflow and BPM solution developed by Workpoint Limited.
+								Welcome to the age of user friendly, easy to deploy, template
+								driven workflows.</p>
+
+
+						</div>
+						<div class="col l3 s12">
+							<h5 class="white-text">Resources</h5>
+							<ul>
+								<li><a class="white-text" href="https://wira.workpoint.co.ke/app" target="_blank">Demo</a></li>
+								<li><a class="white-text" href="http://workpoint.co.ke/blog-3" target="_blank">Blog</a></li>
+								<li><a class="white-text" href="downloads.html">Downloads</a></li>
+								<li><a class="white-text" href="addprocess.html">Accounts</a></li>
+							</ul>
+						</div>
+						<div class="col l3 s12">
+							<h5 class="white-text">Connect</h5>
+							<ul>
+								<li><a class="white-text" href="#!" target="_blank">Contacts</a></li>
+								<li><a class="white-text" href="https://www.facebook.com/WorkPointLtd" target="_blank">Facebook</a></li>
+								<li><a class="white-text" href="http://workpoint.co.ke/contact" target="_blank">Twitter</a></li>
+								<li><a class="white-text" href="https://ke.linkedin.com/in/duggankimani" target="_blank">LinkedIn</a></li>
+							</ul>
+						</div>
+					</div>
 				</div>
-			</div>
-		</footer>
+				<div class="footer-copyright">
+					<div class="container">
+						Made by <a class="orange-text text-lighten-3"
+							href="http://www.workpoint.co.ke">Workpoint Limited</a>
+					</div>
+				</div>
+			</footer>
 
 		<!--  Scripts-->
 		<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
@@ -396,23 +396,35 @@
 		<script src="js/functions.js"></script>
 		<script src="js/style.js"></script>
 		<script type="text/javascript">
-			$(document).ready(function() {
-				loadProcess();
-				$("#new_process").click(function(){
-					resetForm($("#newDataForm"));
-					window.location = "addprocess.html";
-				});
-				
-				$("#newUploadsForm").on("submit", function(e) {
-					var zipFileName = $(this).find('input[name=\'process_zip_\']').val();
-					var refId = $(this).find('input[name=\'refId\']').val();
-					if(zipFileName=='' && refId==''){
-						e.preventDefault();
-						alert('Cannot upload files without attaching a \'process zip\' or preselecting an existing process!');
-					}
-				});
+			$(document)
+					.ready(
+							function() {
+								loadProcess();
+								$("#new_process").click(function() {
+									resetForm($("#newDataForm"));
+									window.location = "addprocess.html";
+								});
 
-			});
+								$("#newUploadsForm")
+										.on(
+												"submit",
+												function(e) {
+													var zipFileName = $(this)
+															.find(
+																	'input[name=\'process_zip_\']')
+															.val();
+													var refId = $(this)
+															.find(
+																	'input[name=\'refId\']')
+															.val();
+													if (zipFileName == ''
+															&& refId == '') {
+														e.preventDefault();
+														alert('Cannot upload files without attaching a \'process zip\' or preselecting an existing process!');
+													}
+												});
+
+							});
 		</script>
 </body>
 </html>
