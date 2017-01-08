@@ -185,7 +185,8 @@ var loadCategories = function loadCategories(categoryid) {
 
 				}
 				
-				options +="<option value="+name+">"+name+"</option>";
+				var key = name;
+				options +="<option value='"+key+"'>"+name+"</option>";
 			}
 
 			// htmlCategory += "</ul>";
