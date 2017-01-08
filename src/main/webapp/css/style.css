@@ -98,7 +98,7 @@ footer.page-footer {
 }
 
 .light-grey {
-	background: #ccc none repeat scroll 0 0;
+	background: #eeeeee none repeat scroll 0 0;
 }
 
 .icon-block p {
@@ -283,4 +283,8 @@ footer.page-footer {
 
 .sidebar a {
 	color: #555 !important;
+}
+
+.background-white{
+	background-color:#ffffff;
 }
