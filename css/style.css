@@ -42,6 +42,10 @@ body {
 	width: 153px;
 }
 
+.google-green{
+	background-color: #6ab344 !important;
+}
+
 footer.page-footer {
 	background-color: #26a69a !important;
 	margin-top: 20px;

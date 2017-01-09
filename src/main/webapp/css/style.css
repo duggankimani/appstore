@@ -18,6 +18,9 @@ body {
 .form-wrapper a {
 	width: 55%;
 }
+.google-green{
+	background-color: #6ab344 !important;
+}
 
 #category_listings li{
 	
@@ -184,22 +187,18 @@ footer.page-footer {
 
 .previous{
 	
-	left: 71px;
-    opacity: 0.8;
-    position: relative;
-    top: 209px;
-    z-index: 10000;
+left: 71px;
 	
+opacity: 0.8;
+	
+z-index: 10000;
 }
 
 .next{
 	
-	left: -130px;
-    opacity: 0.8;
-    position: relative;
-    top: 209px;
-    z-index: 10000;
+opacity: 0.8;
 	
+z-index: 10000;
 }
 
 .searchbar{
@@ -287,4 +286,150 @@ footer.page-footer {
 
 .background-white{
 	background-color:#ffffff;
+}
+
+/*
+Google search bar
+*/
+
+.dac-header-search-inner {
+  margin: 0 auto;
+  max-width: 940px;
+  position: relative;
+  width: 100%;
+}
+
+@media (min-width: 980px) {
+  .dac-header-search-inner::after {
+    background: -webkit-linear-gradient(right, #6ab344, rgba(106, 179, 68, 0));
+    background: linear-gradient(to left, #6ab344, rgba(106, 179, 68, 0));
+    content: '';
+    display: block;
+    height: 64px;
+    position: absolute;
+    right: 100%;
+    top: 0;
+    -webkit-transition: opacity 200ms, -webkit-transform 300ms;
+    transition: opacity 200ms, transform 300ms;
+    -webkit-transform-origin: right center;
+    -ms-transform-origin: right center;
+    transform-origin: right center;
+    width: 64px;
+  }
+  .dac-studio .dac-header-search-inner::after {
+    background: -webkit-linear-gradient(right, #424242, rgba(66, 66, 66, 0));
+    background: linear-gradient(to left, #424242, rgba(66, 66, 66, 0));
+  }
+
+  .dac-ndk .dac-header-search-inner::after {
+    background: -webkit-linear-gradient(right, #00bcd4, rgba(66, 66, 66, 0));
+    background: linear-gradient(to left, #00bcd4, rgba(66, 66, 66, 0));
+  }
+
+  .dac-things .dac-header-search-inner::after {
+    background: -webkit-linear-gradient(right, #1976D2, rgba(66, 66, 66, 0));
+    background: linear-gradient(to left, #1976D2, rgba(66, 66, 66, 0));
+  }
+
+  .dac-search-mode .dac-header-search-inner::after {
+    opacity: 0;
+    -webkit-transform: scaleX(0);
+    -ms-transform: scaleX(0);
+    transform: scaleX(0);
+  }
+}
+
+.dac-header-search-icon {
+  left: 8px;
+  pointer-events: none;
+  position: absolute;
+  top: 4px;
+  font-size: 18px;
+}
+
+.dac-header-search-input {
+  background: #77be53 !important;
+  border-radius: 3px !important;
+  border: none !important;
+  box-sizing: border-box !important;
+  color: #fff;
+  font-size: 14px !important;
+  font-weight: 600;
+  margin: 13px 0 !important;
+  padding: 9px 36px 10px !important;
+  -webkit-transition: background 200ms, color 200ms;
+  transition: background 200ms, color 200ms;
+  width: 100% !important;
+}
+
+.dac-studio .dac-header-search-input {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.dac-ndk .dac-header-search-input {
+  background: rgba(255, 255, 255, .3);
+}
+
+.dac-things .dac-header-search-input {
+  background: #2884D7;
+}
+
+.dac-header-search-close, .dac-header-search-clear {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0;
+  outline: none;
+  position: absolute;
+  margin: 0;
+}
+
+.dac-header-search-clear {
+  display: inline-block;
+  opacity: .4;
+  padding: 8px;
+  top: 15px;
+  right: 0;
+}
+
+.dac-header-search-clear:hover, .dac-header-search-clear:focus {
+  opacity: .8;
+}
+
+.dac-header-search-close {
+  left: -45px;
+  top: 20px;
+  -webkit-transform: translateX(45px);
+  -ms-transform: translateX(45px);
+  transform: translateX(45px);
+  visibility: hidden;
+}
+
+.dac-header-search ::-webkit-input-placeholder {
+  color: #fff;
+  font-weight: 300;
+  -webkit-transition: color 200ms;
+  transition: color 200ms;
+}
+
+.dac-header-search :-moz-placeholder {
+  color: #fff;
+  font-weight: 300;
+  transition: color 200ms;
+}
+
+.dac-header-search ::-moz-placeholder {
+  color: #fff;
+  font-weight: 300;
+  transition: color 200ms;
+}
+
+.dac-header-search :-ms-input-placeholder {
+  color: #fff;
+  font-weight: 300;
+  transition: color 200ms;
+}
+
+.dac-header-search-input:focus {
+  outline: 0;
 }

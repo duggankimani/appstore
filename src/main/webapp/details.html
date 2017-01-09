@@ -93,29 +93,51 @@
 
 					<div class="section-headers_">
 
-						<div class="col s12 m1">
-							<button class="previous btn-flat">Prev</button>
-						</div>
-
-						<div class="col s12 m10">
+						<div class="col s12 m12">
 							<div class="card cards_details">
 								<div class="card-image waves-effect waves-block waves-light">
-
-									<div class="carousel carousel-slider center dimensions"
-										data-indicators="true">
-										<div class="carousel-item white white-text" href="#one!">
-											<h2>First Panel</h2>
-											<p class="white-text">This is your first panel</p>
-										</div>
+									<div class=""
+										style="position: absolute; top: 50%; z-index: 10000;">
+										<button class="previous btn-flat">
+											<i class="material-icons">navigate_before</i>
+										</button>
 									</div>
-
-
+									<div
+										class="carousel carousel-slider center dimensions initialized"
+										data-indicators="true" style="height: 482px;">
+										<a class="carousel-item white-text" href="#slider0!"
+											style="z-index: 0; opacity: 1; display: block; transform: translateX(0px) translateX(0px) translateX(0px) translateZ(0px);"><img
+											src="api/files/p4LppspxJS7yF61q/screenshots/appStore2.JPG"></a><a
+											class="carousel-item white-text" href="#slider1!"
+											style="transform: translateX(0px) translateX(-897px) translateZ(0px); z-index: -1; opacity: 1; display: block;"><img
+											src="api/files/p4LppspxJS7yF61q/screenshots/wira_appstore1.JPG"></a>
+										<ul class="indicators">
+											<li class="indicator-item active"></li>
+											<li class="indicator-item"></li>
+										</ul>
+									</div>
+									<div class=""
+										style="position: absolute; top: 50%; z-index: 10000; right: 0;">
+										<button class="next btn-flat">
+											<i class="material-icons">navigate_next</i>
+										</button>
+									</div>
 								</div>
-								<div class="card-content">
-									<span class="card-title activator grey-text text-darken-4">
-										<span class="detail_name"></span> <i
-										class="material-icons right">more_vert</i>
+								<div class="card-content" style="padding: 20px;">
+									<span class="card-title grey-text text-darken-4"> <span
+										class="detail_name"></span> <!-- Dropdown Trigger --> <a
+										class='dropdown-button btn btn-flat right' href='#'
+										data-activates='dropdown1'><i class="material-icons right">more_vert</i></a>
+										<a class="btn waves-effect waves-light  right"
+										style="font-size: 14px;">Demo</a> <!-- Dropdown Structure -->
+										<ul id='dropdown1' class='dropdown-content'>
+											<li><a id="aEditProcess" href="#">Edit Process</a></li>
+											<li><a href="#!">two</a></li>
+											<li class="divider"></li>
+											<li><a href="#!">three</a></li>
+										</ul>
 									</span>
+
 									<p>
 										<a href="#" class="detail_category"></a>
 									</p>
@@ -128,18 +150,10 @@
 											(zip)</a>
 									</p>
 								</div>
-								<div class="card-reveal">
-									<span class="card-title grey-text text-darken-4"> <span
-										class="detail_name"></span> <i class="material-icons right">close</i>
-									</span> <a id="aEditProcess" href="#">Edit Process</a>
-								</div>
+
 							</div>
-
 						</div>
 
-						<div class="col s12 m1">
-							<button class="next btn-flat">Next</button>
-						</div>
 
 					</div>
 				</div>
