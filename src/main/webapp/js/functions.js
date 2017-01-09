@@ -84,7 +84,8 @@ var loadPopularItems = function loadPopularItems(categoryid) {
 							+ "</h5></a>"
 					htmlDataActive += "</div>";
 					htmlDataActive += "<div class='card-action'>";
-					htmlDataActive += "<a href='details.html'>VIEW</a><span class='free' href='#'>FREE</span>";
+					htmlDataActive += "<a href='details.html?id="
+							+ refId +"'>VIEW</a><span class='free' href='#'>FREE</span>";
 					htmlDataActive += "</div></div>";
 
 					// classDeactivate =
@@ -107,7 +108,8 @@ var loadPopularItems = function loadPopularItems(categoryid) {
 							+ "</h5></a>"
 					htmlDataInActive += "</div>";
 					htmlDataInActive += "<div class='card-action'>";
-					htmlDataInActive += "<a href='details.html'>VIEW</a><span class='free' href='#'>FREE</span>";
+					htmlDataInActive += "<a href='details.html?id="
+							+ refId +"'>VIEW</a><span class='free' href='#'>FREE</span>";
 					htmlDataInActive += "</div></div>";
 
 				}
@@ -290,7 +292,8 @@ var loadProcesses = function loadProcesses(categoryid, searchPhrase) {
 									+ "</h5></a>"
 							htmlDataActive += "</div>";
 							htmlDataActive += "<div class='card-action'>";
-							htmlDataActive += "<a href='details.html'>VIEW</a><span class='free' href='#'>FREE</span>";
+							htmlDataActive += "<a href='details.html?id="
+							+ refId +"'>VIEW</a><span class='free' href='#'>FREE</span>";
 							htmlDataActive += "</div></div></div>";
 
 							// classDeactivate =
@@ -314,7 +317,8 @@ var loadProcesses = function loadProcesses(categoryid, searchPhrase) {
 									+ "</h5></a>"
 							htmlDataInActive += "</div>";
 							htmlDataInActive += "<div class='card-action'>";
-							htmlDataInActive += "<a href='details.html'>VIEW</a><span class='free' href='#'>FREE</span>";
+							htmlDataInActive += "<a href='details.html?id="
+							+ refId +"'>VIEW</a><span class='free' href='#'>FREE</span>";
 							htmlDataInActive += "</div></div></div>";
 
 						}
