@@ -19,50 +19,57 @@
 <body>
 
 	<div class="navbar-fixed">
-		<nav class="light-grey lighten-1" role="navigation">
-
-			<div class="nav-wrapper container">
+		<nav class="google-green" role="navigation" style="">
+			<div class="nav-wrapper">
 				<div class="row searchbar">
 
-					<div class="col s12 m3">
-						<a id="logo-container" href="#" class="brand-logo"><img
-							src="images/wiralogo2.png" /> <!-- <h5>Wira Processes</h5>  -->
-						</a>
+					<div class="col s12 m2">
+						<a id="logo-container" href="#" class="brand-logo"
+							style="height: 40px;"><img src="images/wiralogo.png"
+							style="width: 40px; padding-top: 10px;"> <span
+							style="height: 40px; vertical-align: top; font-size: 26px;">Wira
+								Apps</span> </a>
 					</div>
 
-					<div class="col s12 m7">
+					<div class="col s12 m6">
+						<div class="row">
+							<div class="dac-header-search-inner">
+								<i
+									class="icon-search dac-sprite dac-search-white dac-header-search-icon dac-search"></i>
+								<input id="search_autocomplete" type="text" value=""
+									autocomplete="off" name="q" class="dac-header-search-input"
+									placeholder="Search">
+								<button class="dac-header-search-clear dac-hidden"
+									data-search-clear="">
+									<i class="dac-sprite dac-close-black"></i>
+								</button>
+							</div>
+							<div class="col s12 m10 hide">
+								<input id="search" type="text"
+									class="validate dac-header-search-input">
+							</div>
 
-						<form>
-							<div class="row">
-
-								<div class="col s12 m10">
-
-									<input id="icon_prefix" type="text" class="validate">
-
-								</div>
-
-								<div class="col s12 m2">
-
-									<button type="submit">
-
-										<a href="../icon/search"><i class="icon-search"></i> </a>
-
-									</button>
-
-								</div>
+							<div class="col s12 m2 hide">
+								<button type="submit">
+									<a href="#!"><i class="icon-search"></i> </a>
+								</button>
 
 							</div>
 
-						</form>
-
-						<!-- <form class="form-wrapper cf">
-						<input placeholder="Search here..." required="" type="text">
-						<button type="submit">Search</button>
-					</form>  -->
+						</div>
+					</div>
+					<div class="col s12 m4" style="padding-left: 100px;">
+						<a class="btn waves-effect waves-light"
+							href="https://wira.workpoint.co.ke/app" target="_blank">Demo</a>
+						<a class="btn waves-effect waves-light" href="downloads.html"
+							style="margin-left: 10px;">Getting Started</a>
 
 					</div>
-					<div class="col s12 m2"></div>
 
+					<div>
+						<img src="images/KNA-BETA-VERSION.png"
+							style="width: 80px; position: absolute; right: 0px;">
+					</div>
 				</div>
 
 			</div>
@@ -129,12 +136,10 @@
 										class='dropdown-button btn btn-flat right' href='#'
 										data-activates='dropdown1'><i class="material-icons right">more_vert</i></a>
 										<a class="btn waves-effect waves-light  right"
-										style="font-size: 14px;">Demo</a> <!-- Dropdown Structure -->
+										style="font-size: 14px;" href="https://wira.workpoint.co.ke/app" target="_blank">Demo</a> <!-- Dropdown Structure -->
 										<ul id='dropdown1' class='dropdown-content'>
-											<li><a id="aEditProcess" href="#">Edit Process</a></li>
-											<li><a href="#!">two</a></li>
-											<li class="divider"></li>
-											<li><a href="#!">three</a></li>
+											<li><a id="aEditProcess" href="#" class="download_process">Download</a></li>
+											<li><a id="aEditProcess" href="#">Edit</a></li>
 										</ul>
 									</span>
 
@@ -273,53 +278,50 @@
 
 		</div>
 
-
-		<footer class="page-footer orange">
-			<div class="container">
-				<div class="row">
-					<div class="col l6 s12">
-						<h5 class="white-text">About Wira</h5>
-						<p class="grey-text text-lighten-4">WIRA is business centric
-							workflow and BPM solution developed by Workpoint Limited. Welcome
-							to the age of user friendly, easy to deploy, template driven
-							workflows.</p>
-
-
-					</div>
-					<div class="col l3 s12">
-						<h5 class="white-text">Resources</h5>
-						<ul>
-							<li><a class="white-text"
-								href="https://wira.workpoint.co.ke/app" target="_blank">Demo</a></li>
-							<li><a class="white-text"
-								href="http://workpoint.co.ke/blog-3" target="_blank">Blog</a></li>
-							<li><a class="white-text" href="downloads.html">Downloads</a></li>
-							<li><a class="white-text" href="addprocess.html">Accounts</a></li>
-						</ul>
-					</div>
-					<div class="col l3 s12">
-						<h5 class="white-text">Connect</h5>
-						<ul>
-							<li><a class="white-text"
-								href="http://workpoint.co.ke/contact" target="_blank">Contacts</a></li>
-							<li><a class="white-text"
-								href="https://www.facebook.com/WorkPointLtd" target="_blank">Facebook</a></li>
-							<li><a class="white-text"
-								href="http://workpoint.co.ke/contact" target="_blank">Twitter</a></li>
-							<li><a class="white-text"
-								href="https://ke.linkedin.com/in/duggankimani" target="_blank">LinkedIn</a></li>
-						</ul>
-					</div>
-				</div>
-			</div>
-			<div class="footer-copyright">
-				<div class="container">
-					Made by <a class="orange-text text-lighten-3"
-						href="http://www.workpoint.co.ke">Workpoint Limited</a>
-				</div>
-			</div>
-		</footer>
 	</div>
+
+	<footer class="page-footer orange">
+		<div class="container">
+			<div class="row">
+				<div class="col l6 s12">
+					<h5 class="white-text">About Wira</h5>
+					<p class="grey-text text-lighten-4">WIRA is business centric
+						workflow and BPM solution developed by Workpoint Limited. Welcome
+						to the age of user friendly, easy to deploy, template driven
+						workflows.</p>
+
+
+				</div>
+				<div class="col l3 s12">
+					<h5 class="white-text">Resources</h5>
+					<ul>
+						<li><a class="white-text"
+							href="http://workpoint.co.ke/blog-3" target="_blank">Blog</a></li>
+						<li><a class="white-text" href="addprocess.html">Accounts</a></li>
+					</ul>
+				</div>
+				<div class="col l3 s12">
+					<h5 class="white-text">Connect</h5>
+					<ul>
+						<li><a class="white-text"
+							href="http://workpoint.co.ke/contact" target="_blank">Contacts</a></li>
+						<li><a class="white-text"
+							href="https://www.facebook.com/WorkPointLtd" target="_blank">Facebook</a></li>
+						<li><a class="white-text"
+							href="http://workpoint.co.ke/contact" target="_blank">Twitter</a></li>
+						<li><a class="white-text"
+							href="https://ke.linkedin.com/in/duggankimani" target="_blank">LinkedIn</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="footer-copyright">
+			<div class="container">
+				Made by <a class="orange-text text-lighten-3"
+					href="http://www.workpoint.co.ke">Workpoint Limited</a>
+			</div>
+		</div>
+	</footer>
 
 	<!--  Scripts-->
 	<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
