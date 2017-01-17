@@ -333,7 +333,7 @@ var loadProcesses = function loadProcesses(categoryid, searchPhrase) {
 					}
 					
 					if(inactive==0){
-						inactiveHeading = "<div class='col s12 m10 hide'><h5>Upcoming Processes</h5><p><span>" +
+						inactiveHeading = "<div class='col s12 m10 hide'><h5>Coming Soon</h5><p><span>" +
 						"" +inactive+
 						"</span> Processes</p></div>";
 					}else{
