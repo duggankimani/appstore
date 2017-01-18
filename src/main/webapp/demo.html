@@ -108,6 +108,8 @@
 								<ol type="i">
 									<li>Monthly Workplan & Requisition</li>
 									<li>Expense Claims</li>
+									<li>Payment Requests</li>
+									<li>Leave Application</li>
 									<li>Other processes will be added in due time</li>
 								</ol>
 								<p />
@@ -138,7 +140,7 @@
 									</li>
 								</ul>
 
-								<a class="btn green" target="_blank"
+								<a id="app-demo" class="btn green" target="_blank"
 									href="https://wira.workpoint.co.ke/app/login.html">Click
 									here to view demo</a>
 
@@ -319,6 +321,15 @@
 	<script src="js/functions.js"></script>
 	<script src="js/details.js"></script>
 	<script>
+		initDemoUrl();
+		function initDemoUrl(){
+			var processref = getUrlParameter('id');
+			if(processref!=null){
+				$("#app-demo").attr("href","https://wira.workpoint.co.ke/app/login.html#/activities/"+processref);	
+			}
+			
+		};
+		
 		(function(i, s, o, g, r, a, m) {
 			i['GoogleAnalyticsObject'] = r;
 			i[r] = i[r] || function() {

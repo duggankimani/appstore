@@ -27,13 +27,14 @@ $(document)
 					loadPopularItems();
 					
 					// Get Catgory
-					var categoryid = getUrlParameter('id');
+					var processref = getUrlParameter('id');
+					$("#demo-link").attr("href","demo.html?id="+processref);
 					// Load All Categories
 					// Check if Category ID is provided
-					var nothing = loadCategories(categoryid);
+					var nothing = loadCategories(processref);
 					
 					$.ajax({
-						url : 'api/categories/all/processes/'+categoryid,
+						url : 'api/categories/all/processes/'+processref,
 						async : true,
 						success : function(data) {
 
